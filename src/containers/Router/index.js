@@ -1,5 +1,6 @@
 import React from "react";
 import { ConnectedRouter } from "connected-react-router";
+import { Switch, Route } from "react-router-dom";
 import splashscreen from "../Login/splashscreen";
 import loginPage from "../Login/loginPage";
 import signUpPage from "../SignUp/signUpPage";
