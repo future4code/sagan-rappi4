@@ -2,6 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getRestaurantsList } from '../../Actions/feedPageAction'
 import TopBar from '../../Components/TopBar'
+import BottomNavigationBar from '../../Components/BottomNavigation'
+import styled from 'styled-components'
+
+const BodyWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  width: 100vw;
+`
 
 class feedPage extends Component {
 
@@ -13,16 +22,19 @@ class feedPage extends Component {
     return (
       <div>
         <TopBar />
-        <input placeholder={'restaurante'}></input>
-        {this.props.getMyRestaurants.map(element => {
-          return (
-            <div key={element.id}>
-              <p>
-                {element.name}
-              </p>
-            </div>
-          )
-        })}
+        <BodyWrapper>
+          <input placeholder={'restaurante'}></input>
+          {this.props.getMyRestaurants.map(element => {
+            return (
+              <div key={element.id}>
+                <p>
+                  {element.name}
+                </p>
+              </div>
+            )
+          })}
+          <BottomNavigationBar />
+        </BodyWrapper>
       </div>
     )
   }
