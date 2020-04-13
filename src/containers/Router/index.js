@@ -1,5 +1,6 @@
 import React from "react";
 import { ConnectedRouter } from "connected-react-router";
+import splashscreen from "../Login/splashscreen";
 import loginPage from "../Login/loginPage";
 import signUpPage from "../SignUp/signUpPage";
 import informAddressPage from "../Profile/informAdressPage";
@@ -30,7 +31,7 @@ function Router(props) {
   return (
     <ConnectedRouter history={props.history}>
       <Switch>
-        <Route exact path={routes.root} component={ } />
+        <Route exact path={routes.root} component={splashscreen} />
         <Route exact path={routes.loginPage} component={loginPage} />
         <Route exact path={routes.signUpPage} component={signUpPage} />
         <Route exact path={routes.informAddressPage} component={informAddressPage} />
