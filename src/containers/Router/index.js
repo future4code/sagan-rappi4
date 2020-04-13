@@ -13,7 +13,7 @@ import profilePage from "../Profile/profilePage";
 import editProfilePage from "../Profile/editProfilePage";
 import editAddressPage from "../Profile/editProfilePage";
 
-const routes = {
+export const routes = {
   root: "/",
   loginPage: "/login",
   signUpPage: "/signup",
