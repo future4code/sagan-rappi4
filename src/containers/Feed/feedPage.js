@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getRestaurantsList } from '../../Actions/feedPageAction'
 import TopBar from '../../Components/TopBar'
+import RestaurantFilterBar from '../../Components/RestaurantFilterBar'
 import BottomNavigationBar from '../../Components/BottomNavigation'
 import styled from 'styled-components'
 
@@ -24,7 +25,24 @@ class feedPage extends Component {
         <TopBar />
         <BodyWrapper>
           <input placeholder={'restaurante'}></input>
+          <RestaurantFilterBar />
+
           {this.props.getMyRestaurants.map(element => {
+          if (element.category === "Árabe") {
+            return (
+              
+              <div key={element.id}>
+                <p>
+                  {element.name}
+                </p>
+              </div>
+            )
+
+          }
+        })}
+
+
+          {/* {this.props.getMyRestaurants.map(element => {
             return (
               <div key={element.id}>
                 <p>
@@ -32,7 +50,7 @@ class feedPage extends Component {
                 </p>
               </div>
             )
-          })}
+          })} */}
           <BottomNavigationBar />
         </BodyWrapper>
       </div>
