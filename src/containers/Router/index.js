@@ -14,7 +14,7 @@ import editProfilePage from "../Profile/editProfilePage";
 import editAddressPage from "../Profile/editProfilePage";
 import { Switch, Route } from "react-router-dom";
 
-const routes = {
+export const routes = {
   root: "/",
   loginPage: "/login",
   signUpPage: "/signup",
