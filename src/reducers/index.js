@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
-import restaurant from "./restaurant";
+import restaurants from './restaurants'
 
 export const generateReducers = history =>
   combineReducers({
     router: connectRouter(history),
-    restaurant
+    restaurants
   });
