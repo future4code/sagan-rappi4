@@ -7,11 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux'
 import { getRestaurantsList } from '../Actions/feedPageAction'
 
-// function DidMount() {
-//   useEffect(() => getPosts(), []);
-//   return null;
-// }
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -42,8 +37,23 @@ function a11yProps(index) {
   };
 }
 
+function restaurantMap(props, categoryType) {
+  return (
+    props.getMyRestaurants.map(element => {
+      if (element.category === categoryType) {
+        return (
+          <div key={element.id}>
+            <p>
+              {element.name}
+            </p>
+          </div>
+        )
+      }
+    })
+  )
+}
 
-function RestaurantFilterBar() {
+function RestaurantFilterBar(props) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -62,39 +72,44 @@ function RestaurantFilterBar() {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
-          <Tab label="Burguer" {...a11yProps(0)} />
+          <Tab label="Todas" {...a11yProps(0)} />
           <Tab label="Asiática" {...a11yProps(1)} />
           <Tab label="Massas" {...a11yProps(2)} />
-          <Tab label="Saudável" {...a11yProps(3)} />
-          <Tab label="Árabe" {...a11yProps(4)} />
+          <Tab label="Carnes" {...a11yProps(3)} />
+          <Tab label="Petiscos" {...a11yProps(4)} />
+          <Tab label="Baiana" {...a11yProps(5)} />
+          <Tab label="Sorvetes" {...a11yProps(6)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        {/* {this.props.getMyRestaurants.map(element => {
-          if (element.category === "Árabe") {
-            return (
-              
-              <div key={element.id}>
-                <p>
-                  {element.name}
-                </p>
-              </div>
-            )
+        {props.getMyRestaurants.map(element => {
+          return (
+            <div key={element.id}>
+              <p>
+                {element.name}
+              </p>
+            </div>
+          )
 
-          }
-        })} */}
+        })}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Asiática
+        {restaurantMap(props, 'Asiática')}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Massas
+        {restaurantMap(props, 'Italiana')}
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Saudável
+        {restaurantMap(props, 'Carnes')}
       </TabPanel>
       <TabPanel value={value} index={4}>
-        Árabe
+        {restaurantMap(props, "Petiscos")}
+      </TabPanel>
+      <TabPanel value={value} index={5}>
+        {restaurantMap(props, "Baiana")}
+      </TabPanel>
+      <TabPanel value={value} index={6}>
+        {restaurantMap(props, "Sorvetes")}
       </TabPanel>
     </div>
   );
@@ -111,7 +126,5 @@ function mapStateToProps(state) {
     getMyRestaurants: state.restaurants.restaurantsList
   };
 }
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(RestaurantFilterBar)
