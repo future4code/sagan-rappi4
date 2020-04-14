@@ -12,7 +12,6 @@ import cartPage from "../Cart/cartPage";
 import profilePage from "../Profile/profilePage";
 import editProfilePage from "../Profile/editProfilePage";
 import editAddressPage from "../Profile/editProfilePage";
-import { Switch, Route } from "react-router-dom";
 
 export const routes = {
   root: "/",
