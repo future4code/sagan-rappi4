@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getAddress, placeOrder } from "../../Actions/cartPageAction"
+import { getAddress, placeOrder } from "../../actions/cartPageAction"
 import { push } from "connected-react-router";
 import TopBar from '../../Components/TopBar'
 import BottomNavigationBar from '../../Components/BottomNavigation'
