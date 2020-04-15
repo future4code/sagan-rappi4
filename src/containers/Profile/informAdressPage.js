@@ -1,25 +1,75 @@
 import React, { Component } from "react";
-import * as IAS from "./informAdressPageStyled";
+import * as IAS from "./informAddressPageStyled";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router';
+import { createAddress } from '../../Actions/ActionsSignUp'
 
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
+import TopBar from "../../Components/TopBar";
 
-class informAdressPage extends Component {
+class informAddressPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-
+    this.state = { 
+      street: "R. Afonso Braz",
+      number: "177",
+      neighbourhood: "Vila N. Conceição",
+      city: "São Paulo",
+      state: "SP",
+      complement: "71"
     };
+  }
+
+  handleFieldStreet = (event) => {
+    this.setState({ street: event.target.value })
+  };
+
+  handleFieldNumber = (event) => {
+    this.setState({ number: event.target.value })
+  };
+
+  handleFieldComplement = (event) => {
+    this.setState({ complement: event.target.value })
+  };
+
+  handleFieldNeighbourhood = (event) => {
+    this.setState({ neighbourhood: event.target.value })
+  };
+
+  handleFieldCity = (event) => {
+    this.setState({ city: event.target.value })
+  };
+
+  handleFieldState = (event) => {
+    this.setState({ state: event.target.value })
+  };
+
+  handleAddress = (event) => {
+    event.preventDefault();
+    
+    const userAddress = {
+      strett: this.state.street,
+      number: this.state.number,
+      neighbourhood: this.state.neighbourhood,
+      city: this.state.city,
+      state: this.state.state,
+      complement: this.state.complement,
+    }
+    
+    this.props.createAddress(userAddress)
+
   }
 
 
   render() {
+
+
     return (
       <div>
-          <form>
+        <TopBar/>
+          <IAS.FormAddressWrapper onSubmit={this.handleAddress}>
               <IAS.Title>Meu endereco</IAS.Title>
 
               <IAS.ContainerTextField>
@@ -30,6 +80,8 @@ class informAdressPage extends Component {
                     defaultValue="Rua / Av."
                     variant="outlined"
                     fullWidth={true}
+                    value={this.state.street}
+                    onChange={this.handleFieldStreet}
                     />
               </IAS.ContainerTextField>
 
@@ -41,6 +93,8 @@ class informAdressPage extends Component {
                     defaultValue="Número"
                     variant="outlined"
                     fullWidth={true}
+                    value={this.state.number}
+                    onChange={this.handleFieldNumber}
                     />
               </IAS.ContainerTextField>
 
@@ -52,6 +106,8 @@ class informAdressPage extends Component {
                     defaultValue="Complemento"
                     variant="outlined"
                     fullWidth={true}
+                    value={this.state.complement}
+                    onChange={this.handleFieldComplement}
                     />
               </IAS.ContainerTextField>
 
@@ -63,6 +119,8 @@ class informAdressPage extends Component {
                     defaultValue="Bairro"
                     variant="outlined"
                     fullWidth={true}
+                    value={this.state.neighbourhood}
+                    onChange={this.handleFieldNeighbourhood}
                     />
               </IAS.ContainerTextField>
 
@@ -74,6 +132,8 @@ class informAdressPage extends Component {
                     defaultValue="Cidade"
                     variant="outlined"
                     fullWidth={true}
+                    value={this.state.city}
+                    onChange={this.handleFieldCity}
                     />
               </IAS.ContainerTextField>
 
@@ -85,17 +145,19 @@ class informAdressPage extends Component {
                     defaultValue="Estado"
                     variant="outlined"
                     fullWidth={true}
+                    value={this.state.state}
+                    onChange={this.handleFieldState}
                     />
               </IAS.ContainerTextField>
 
                 <Button 
                     variant="contained" 
                     type="submit"
-                    fullWidth={true}
+                    fullWidth={true}                    
                     >Salvar
                 </Button>
 
-          </form>
+          </IAS.FormAddressWrapper>
       </div>
     );
   }
@@ -103,7 +165,7 @@ class informAdressPage extends Component {
 
 function mapDispatchToProps(dispatch){
     return{
-
+      createAddress: (userAddress) => dispatch(createAddress(userAddress))
     }
 }
-export default connect(null, mapDispatchToProps) (informAdressPage)
+export default connect(null, mapDispatchToProps) (informAddressPage)
