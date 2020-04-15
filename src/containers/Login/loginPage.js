@@ -8,7 +8,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import LogoInv from '../../images/logo/logo-future-eats-invert.svg'
 import { Typography, Link } from "@material-ui/core";
+import { doLogin } from '../../actions/Login/middleware';
 
+//#region styled
 const Wrapper = styled.div`
   margin: 20px auto;
   width: 400px;
@@ -17,6 +19,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  a {
+    cursor: pointer;
+  }
 `
 const Title = styled(Typography)`
   letter-spacing: -0.39px;
@@ -36,6 +41,7 @@ const Btn = styled(Button)`
   font-size: 0.95;
   text-transform: none;
 `
+//#endregion
 
 class LoginPage extends Component {
   constructor(props) {
@@ -46,21 +52,56 @@ class LoginPage extends Component {
     };
   }
 
+  componentDidMount() {
+    const { userLogged, goToFeed, goToInformAddress } = this.props;
+    if (userLogged) {
+      if (userLogged.hasAddress) {
+        goToFeed();
+      } else {
+        goToInformAddress();
+      }
+    }
+  }
+
+  handleChange = (event) => {
+    const { id, value } = event.target;
+    this.setState({ [id]: value })
+  }
+
+  handleLogin = (event) => {
+    event.preventDefault();
+    const { email, password } = this.state;
+    if (!email || !password) {
+      alert('All fields are required!');
+    } else {
+      this.props.doLogin(this.state);
+    }
+  }
+
   render() {
     const { goToRegister } = this.props
+    const { email, password } = this.state;
     return (
       <Wrapper>
         <Logo src={LogoInv} />
-        <Form>
+        <Form onSubmit={this.handleLogin}>
           <Title variant="subtitle1">Login</Title>
           <ContainerEl>
             <TextField
               required
+              type="email"
               id="email"
+              name="email"
               label="Email"
               placeholder="email@email.com"
               InputLabelProps={{shrink: true}}
-              value={this.state.email}
+              inputProps={{
+                required: "required",
+                pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$",
+                title: "Insira um email válido",
+              }}
+              value={email}
+              onChange={this.handleChange}
               variant="outlined"
               fullWidth={true}
             />
@@ -68,11 +109,19 @@ class LoginPage extends Component {
           <ContainerEl>
             <TextField
               required
+              type="password"
               id="password"
+              name="password"
               label="Senha"
               placeholder="Mínimo 6 caracteres"
               InputLabelProps={{shrink: true}}
-              value={this.state.email}
+              inputProps={{
+                required: "required",
+                pattern: "[A-Za-z0-9@#$%]{6,}", 
+                title: "Mínimo 6 caracteres",
+              }}
+              value={password}
+              onChange={this.handleChange}
               variant="outlined"
               fullWidth={true}
             />
@@ -96,9 +145,19 @@ class LoginPage extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapStateToProps(state) {
   return {
-    goToRegister: () => { console.log('register') }
+    userLogged: state.users.user
   }
 }
-export default connect(null, mapDispatchToProps)(Splash(LoginPage))
+
+function mapDispatchToProps(dispatch) {
+  return {
+    goToRegister: () => dispatch(push(routes.signUpPage)),
+    goToFeed: () => dispatch(push(routes.feedPage)),
+    goToInformAddress: () => dispatch(push(routes.informAddressPage)),
+    doLogin: (login) => dispatch(doLogin(login))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Splash(LoginPage))
