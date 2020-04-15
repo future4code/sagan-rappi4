@@ -1,7 +1,6 @@
 import React from "react";
 import { ConnectedRouter } from "connected-react-router";
 import { Switch, Route } from "react-router-dom";
-import splashscreen from "../Login/splashscreen";
 import loginPage from "../Login/loginPage";
 // import signUpPage from "../SignUp/signUpPage";
 import informAddressPage from "../Profile/informAdressPage";
@@ -32,6 +31,7 @@ function Router(props) {
   return (
     <ConnectedRouter history={props.history}>
       <Switch>
+        <Route exact path={routes.root} component={loginPage} />
         <Route exact path={routes.restaurantPage} component={restaurantPage} />
         <Route exact path={routes.root} component={feedPage} />
         <Route exact path={routes.loginPage} component={loginPage} />
@@ -42,7 +42,7 @@ function Router(props) {
         <Route exact path={routes.cartPage} component={cartPage} />
         <Route exact path={routes.profilePage} component={profilePage} />
         <Route exact path={routes.editProfilePage} component={editProfilePage} />
-        <Route exact path={routes.editAddressPage} component={editAddressPage} />
+        {/* <Route exact path={routes.editAddressPage} component={editAddressPage} /> */}
       </Switch>
     </ConnectedRouter>
   );
