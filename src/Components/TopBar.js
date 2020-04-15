@@ -1,7 +1,6 @@
 import React from "react";
 import { Paper } from '@material-ui/core'
 import styled from 'styled-components'
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 const TopBarWrapper = styled.div`
     height: 10vh;
@@ -23,15 +22,15 @@ const CenterTitle = styled.h3`
     margin: 0;
 `
 
-export default function TopBar() {
+export default function TopBar(props) {
   return (
     <Paper elevation={0} >
       <TopBarWrapper>
         <ReturnButton>
-          <ArrowBackIosIcon fontSize='small'/>
+          {props.returnButton}
         </ReturnButton>
         <CenterTitle>
-          Título
+          {props.title}
         </CenterTitle>
       </TopBarWrapper>
     </Paper>

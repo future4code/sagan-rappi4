@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import styled from 'styled-components'
@@ -7,11 +7,14 @@ import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
 
 const BottomNavigationWrapper = styled.div`
-  position: sticky;
+  position: fixed;
+  width: 100%;
   bottom: 0;
+  margin: 0;
+  padding: 0;
 `
 
-export default function BottomNavigationBar() {
+export default function BottomNavigationBar(props) {
   const [value, setValue] = React.useState(0);
 
   return (
@@ -22,10 +25,10 @@ export default function BottomNavigationBar() {
           setValue(newValue);
         }}
       >
-        <BottomNavigationAction icon={<HomeOutlinedIcon />} />
-        <BottomNavigationAction icon={<ShoppingCartOutlinedIcon />} />
-        <BottomNavigationAction icon={<PermIdentityOutlinedIcon />} />
+        <BottomNavigationAction onClick={() => { props.showFeed() }} icon={<HomeOutlinedIcon />} />
+        <BottomNavigationAction onClick={() => { props.showCart() }} icon={<ShoppingCartOutlinedIcon />} />
+        <BottomNavigationAction onClick={() => { props.showProfile() }} icon={<PermIdentityOutlinedIcon />} />
       </BottomNavigation>
     </BottomNavigationWrapper>
-  );
+  )
 }
