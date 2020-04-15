@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import {setCurrentPage} from "../../actions/menuAction"
 
 
 const BodyWrapper = styled.div`
@@ -42,6 +43,7 @@ class feedPage extends Component {
 
   componentDidMount() {
     this.props.getPosts()
+    this.props.setCurrentPage("feed")
   }
 
   renderFeedPage = () => {
@@ -136,7 +138,6 @@ class feedPage extends Component {
           <SearchMessage>{this.state.showSearchPage}</SearchMessage>
           {this.state.showFilterBar ? filterBar : ""}
         </BodyWrapper>
-        {this.state.showBottomNavigation ? bottomNavigation : ""}
       </div>
     )
   }
@@ -145,6 +146,7 @@ class feedPage extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     getPosts: () => dispatch(getRestaurantsList()),
+    setCurrentPage: (currentPage) => dispatch(setCurrentPage(currentPage))
   };
 }
 

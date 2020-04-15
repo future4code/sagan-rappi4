@@ -5,7 +5,8 @@ import {
   MuiThemeProvider,
   createGenerateClassName,
   jssPreset,
-  CssBaseline
+  CssBaseline,
+  BottomNavigation
 } from "@material-ui/core";
 import JssProvider from "react-jss/lib/JssProvider";
 import { create } from "jss";
@@ -15,6 +16,8 @@ import { createBrowserHistory } from "history";
 import { createStore, applyMiddleware, compose } from "redux";
 import { generateReducers } from "../../reducers";
 import { routerMiddleware } from "connected-react-router";
+import BottomNavigationBar from '../../Components/BottomNavigation'
+
 
 const generateClassName = createGenerateClassName();
 const jss = create({
@@ -40,6 +43,7 @@ export const App = () => (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <Router history={history} />
+        <BottomNavigationBar />
       </MuiThemeProvider>
     </JssProvider>
   </Provider>
