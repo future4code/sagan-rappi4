@@ -1,14 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import { connect } from "react-redux";
-import { getRestaurantsList } from "../Actions/feedPageAction";
+import React from "react"
+import PropTypes from "prop-types"
+import AppBar from "@material-ui/core/AppBar"
+import Tabs from "@material-ui/core/Tabs"
+import Tab from "@material-ui/core/Tab"
+import Typography from "@material-ui/core/Typography"
+import { connect } from "react-redux"
+import { getRestaurantsList } from "../Actions/feedPageAction"
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const { children, value, index, ...other } = props
 
   return (
     <Typography
@@ -21,20 +21,20 @@ function TabPanel(props) {
     >
       {value === index && <div p={3}>{children}</div>}
     </Typography>
-  );
+  )
 }
 
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
   value: PropTypes.any.isRequired,
-};
+}
 
 function a11yProps(index) {
   return {
     id: `scrollable-auto-tab-${index}`,
     "aria-controls": `scrollable-auto-tabpanel-${index}`,
-  };
+  }
 }
 
 function restaurantMap(restaurants) {
@@ -43,34 +43,37 @@ function restaurantMap(restaurants) {
       <div key={element.id}>
         <p>{element.name}</p>
       </div>
-    );
-  });
+    )
+  })
 }
 
 function filterRestaurants(restaurants, categoryType) {
-  return restaurants.filter((element) => element.category === categoryType);
+  return restaurants.filter((element) => element.category === categoryType)
 }
 
 function RestaurantFilterBar(props) {
-  const resturantCategories = props.getMyRestaurants.map((element) => {
-    return element.category;
-  });
+  const restaurantCategories = props.getMyRestaurants.map((element) => {
+    return element.category
+  })
 
-  const [value, setValue] = React.useState(undefined);
+  const [value, setValue] = React.useState(undefined)
   const [showRestaurants, setShowRestaurants] = React.useState(
     props.getMyRestaurants
-  );
+  )
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
-    const category = resturantCategories[newValue];
-    setShowRestaurants(filterRestaurants(props.getMyRestaurants, category));
-  };
+    if (value === undefined) {
+      setValue(newValue)
+      const category = restaurantCategories[newValue]
+      setShowRestaurants(filterRestaurants(props.getMyRestaurants, category))
 
-  function indexTabPanel(array) {
-    for (let index = 0; index < array.length; index++) {
-      const element = array[index];
-      return element;
+    } else if (value === newValue) {
+      setValue(undefined)
+      setShowRestaurants(filterRestaurants(props.getMyRestaurants))
+    } else {
+      setValue(newValue)
+      const category = restaurantCategories[newValue]
+      setShowRestaurants(filterRestaurants(props.getMyRestaurants, category))
     }
   }
 
@@ -87,7 +90,7 @@ function RestaurantFilterBar(props) {
           aria-label="scrollable auto tabs example"
         >
           {props.getMyRestaurants.map((element) => {
-            return <Tab label={element.category} {...a11yProps(element.id)} />;
+            return <Tab label={element.category} {...a11yProps(element.id)} />
           })}
         </Tabs>
       </AppBar>
@@ -96,22 +99,22 @@ function RestaurantFilterBar(props) {
         showRestaurants.length === 0 ? props.getMyRestaurants : showRestaurants
       )}
     </div>
-  );
+  )
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getPosts: () => dispatch(getRestaurantsList()),
-  };
+  }
 }
 
 function mapStateToProps(state) {
   return {
     getMyRestaurants: state.restaurants.restaurantsList,
-  };
+  }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RestaurantFilterBar);
+)(RestaurantFilterBar)
