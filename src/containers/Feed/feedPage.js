@@ -9,7 +9,7 @@
   import AccountCircle from '@material-ui/icons/AccountCircle';
   import InputAdornment from '@material-ui/core/InputAdornment';
   import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-
+  import {setCurrentPage} from "../../actions/menuAction"
 
   const BodyWrapper = styled.div`
     display: flex;
@@ -40,9 +40,10 @@
       }
     }
 
-    componentDidMount() {
-      this.props.getPosts()
-    }
+  componentDidMount() {
+    this.props.getPosts()
+    this.props.setCurrentPage("feed")
+  }
 
     renderFeedPage = () => {
       this.setState({
@@ -128,25 +129,27 @@
         />
       )
 
-      return (
-        <div>
-          {this.state.showTopBar ? topBar : ""}
-          <BodyWrapper>
-            {this.state.showTextField ? textField : ""}
-            <SearchMessage>{this.state.showSearchPage}</SearchMessage>
-            {this.state.showFilterBar ? filterBar : ""}
-          </BodyWrapper>
-          {this.state.showBottomNavigation ? bottomNavigation : ""}
-        </div>
-      )
-    }
+
+    return (
+      <div>
+        {this.state.showTopBar ? topBar : ""}
+        <BodyWrapper>
+          {this.state.showTextField ? textField : ""}
+          <SearchMessage>{this.state.showSearchPage}</SearchMessage>
+          {this.state.showFilterBar ? filterBar : ""}
+        </BodyWrapper>
+      </div>
+    )
   }
 
-  function mapDispatchToProps(dispatch) {
-    return {
-      getPosts: () => dispatch(getRestaurantsList()),
-    };
-  }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getPosts: () => dispatch(getRestaurantsList()),
+    setCurrentPage: (currentPage) => dispatch(setCurrentPage(currentPage))
+  };
+}
+
 
   function mapStateToProps(state) {
     return {
