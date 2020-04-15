@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import * as IAS from "./informAddressPageStyled";
+import * as IAS from "./informAdressPageStyled";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router';
-import { createAddress } from '../../Actions/ActionsSignUp'
-
+import { createAddress } from '../../actions/actionsSignUp'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import TopBar from "../../Components/TopBar";
@@ -13,12 +13,13 @@ class informAddressPage extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      street: "R. Afonso Braz",
-      number: "177",
-      neighbourhood: "Vila N. Conceição",
-      city: "São Paulo",
-      state: "SP",
-      complement: "71"
+      street: "",
+      number: "",
+      neighbourhood: "",
+      city: "",
+      state: "",
+      complement: "",
+      showBackButton: true
     };
   }
 
@@ -50,27 +51,42 @@ class informAddressPage extends Component {
     event.preventDefault();
     
     const userAddress = {
-      strett: this.state.street,
+      street: this.state.street,
       number: this.state.number,
       neighbourhood: this.state.neighbourhood,
       city: this.state.city,
       state: this.state.state,
-      complement: this.state.complement,
+      complement: this.state.complement
     }
     
     this.props.createAddress(userAddress)
 
   }
 
+  // goToHomePage = (event) => {
+    
+  // }
+
 
   render() {
+    
+
+    this.componentDidMount = () => {
+      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InFhSzlGQVZ2QkttUGVhMkFHdnN0IiwibmFtZSI6IlZpdG9yTG9wZXMiLCJlbWFpbCI6ImxvcGVzc3NickBnbWFpbC5jb20iLCJjcGYiOiI5OTkuOTk5Ljk5OS05OSIsImhhc0FkZHJlc3MiOnRydWUsImFkZHJlc3MiOiJSLiBMb3JvLCAxNTI2LCAyMjMgLSBuYWRhIiwiaWF0IjoxNTg2ODkxODcwfQ.SRXANWnaclJIAj8SONM_IFwXk1-4q-y30RSCY4RqKQY"
+      if( !token ){        
+        this.props.goToHomePage()
+      }
+    }
 
 
     return (
       <div>
-        <TopBar/>
+        <TopBar 
+        title={"Meu endereço"} 
+        returnButton={this.state.showBackButton ? <ArrowBackIosIcon fontSize='small' /> : ''}
+
+        />
           <IAS.FormAddressWrapper onSubmit={this.handleAddress}>
-              <IAS.Title>Meu endereco</IAS.Title>
 
               <IAS.ContainerTextField>
                 <TextField
@@ -165,7 +181,8 @@ class informAddressPage extends Component {
 
 function mapDispatchToProps(dispatch){
     return{
-      createAddress: (userAddress) => dispatch(createAddress(userAddress))
+      createAddress: (userAddress) => dispatch(createAddress(userAddress)),
+      goToLoginPage: () => dispatch(push(routes.loginPage))
     }
 }
 export default connect(null, mapDispatchToProps) (informAddressPage)
