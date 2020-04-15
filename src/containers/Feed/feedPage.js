@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { TextField } from '@material-ui/core'
-import { getRestaurantsList } from '../../Actions/feedPageAction'
+import { getRestaurantsList } from '../../actions/feedPageAction'
 import TopBar from '../../Components/TopBar'
 import RestaurantFilterBar from '../../Components/RestaurantFilterBar'
 import BottomNavigationBar from '../../Components/BottomNavigation'

@@ -3,7 +3,7 @@ import { ConnectedRouter } from "connected-react-router";
 import { Switch, Route } from "react-router-dom";
 import splashscreen from "../Login/splashscreen";
 import loginPage from "../Login/loginPage";
-// import signUpPage from "../SignUp/signUpPage";
+import signUpPage from "../SignUp/signUpPage";
 import informAddressPage from "../Profile/informAdressPage";
 import feedPage from "../Feed/feedPage";
 import searchPage from "../Feed/searchPage";
