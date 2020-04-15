@@ -7,6 +7,15 @@ export const GlobalStyle = createGlobalStyle`
     }
 `
 
+export const FormAddressWrapper = styled.form`
+    width: 100%;
+    height: 80vh;
+    display: grid;
+    gap: 5vw;
+    place-content: center;
+    justify-content: center;
+`
+
 export const Title = styled.p`
     width: 296px;
     height: 18px;
@@ -22,5 +31,5 @@ export const Title = styled.p`
 `
 
 export const ContainerTextField = styled.div`
-    margin: 5vw;
+    /* margin: 5vw; */
 `
