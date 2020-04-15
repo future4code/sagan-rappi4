@@ -38,17 +38,16 @@ function a11yProps(index) {
 }
 
 function restaurantMap(props, categoryType) {
+  console.log('categoryType ', categoryType)
   return (
-    props.getMyRestaurants.map(element => {
-      if (element.category === categoryType) {
-        return (
-          <div key={element.id}>
-            <p>
-              {element.name}
-            </p>
-          </div>
-        )
-      }
+    props.getMyRestaurants.filter((element) => (element.category === categoryType)).map(element => {
+      return (
+        <div key={element.id}>
+          <p>
+            {element.name}
+          </p>
+        </div>
+      )
     })
   )
 }
@@ -58,7 +57,15 @@ function RestaurantFilterBar(props) {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    console.log('newValue ', newValue)
   };
+
+  function indexTabPanel(array) {
+    for (let index = 0; index < array.length; index++) {
+      const element = array[index]
+      return element
+    }
+  }
 
   return (
     <div>
@@ -72,26 +79,44 @@ function RestaurantFilterBar(props) {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
-          <Tab label="Todas" {...a11yProps(0)} />
-          <Tab label="Asiática" {...a11yProps(1)} />
+          {props.getMyRestaurants.map(element => {
+            return (
+              <Tab label={element.category} {...a11yProps(element.id)} />
+            )
+
+            // for (let i = 0; i < element.length; i++) {
+            //   const index = element[i];
+
+            //   return (
+            //     <Tab label={element.category} {...a11yProps(index)} />
+            //   )
+            // }
+
+          })}
+
+          {/* <Tab label="Todas" {...a11yProps(0)} /> */}
+          {/* <Tab label={props.restaurantCategory} {...a11yProps(1)} />
           <Tab label="Massas" {...a11yProps(2)} />
           <Tab label="Carnes" {...a11yProps(3)} />
           <Tab label="Petiscos" {...a11yProps(4)} />
           <Tab label="Baiana" {...a11yProps(5)} />
-          <Tab label="Sorvetes" {...a11yProps(6)} />
+          <Tab label="Sorvetes" {...a11yProps(6)} /> */}
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
-        {props.getMyRestaurants.map(element => {
-          return (
-            <div key={element.id}>
-              <p>
-                {element.name}
-              </p>
-            </div>
-          )
 
-        })}
+      {props.getMyRestaurants.map(element => {
+        console.log(element.id)
+        return (
+          <TabPanel value={value} index={0}>
+            {restaurantMap(props, element.category)}
+          </TabPanel>
+        )
+
+      })}
+
+
+      {/* <TabPanel value={value} index={0}>
+        {restaurantMap(props, 'Árabe')}
       </TabPanel>
       <TabPanel value={value} index={1}>
         {restaurantMap(props, 'Asiática')}
@@ -110,7 +135,7 @@ function RestaurantFilterBar(props) {
       </TabPanel>
       <TabPanel value={value} index={6}>
         {restaurantMap(props, "Sorvetes")}
-      </TabPanel>
+      </TabPanel> */}
     </div>
   );
 }

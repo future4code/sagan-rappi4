@@ -6,10 +6,9 @@ import TopBar from '../../Components/TopBar'
 import RestaurantFilterBar from '../../Components/RestaurantFilterBar'
 import BottomNavigationBar from '../../Components/BottomNavigation'
 import styled from 'styled-components'
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-
+import SearchIcon from '@material-ui/icons/Search';
 
 const BodyWrapper = styled.div`
   display: flex;
@@ -104,17 +103,18 @@ class feedPage extends Component {
 
     const textField = (
       <TextField
-        id="outlined-basic"
-        label="restaurante"
         variant="outlined"
-        startAdornment={
-          <InputAdornment position="start">
-            <AccountCircle />
-          </InputAdornment>
-        }
+        placeholder="Restaurante"
+        id="input-with-icon-textfield"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          )
+        }}
         onClick={this.renderSearchPage}
-      />
-    )
+      />)
 
     const filterBar = (
       <RestaurantFilterBar />
