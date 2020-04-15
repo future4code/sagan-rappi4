@@ -1,15 +1,41 @@
-  import React, { Component } from 'react'
-  import { connect } from 'react-redux'
-  import { TextField } from '@material-ui/core'
-  import { getRestaurantsList } from '../../actions/feedPageAction'
-  import TopBar from '../../Components/TopBar'
-  import RestaurantFilterBar from '../../Components/RestaurantFilterBar'
-  import BottomNavigationBar from '../../Components/BottomNavigation'
-  import styled from 'styled-components'
-  import AccountCircle from '@material-ui/icons/AccountCircle';
-  import InputAdornment from '@material-ui/core/InputAdornment';
-  import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-  import {setCurrentPage} from "../../actions/menuAction"
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { TextField } from '@material-ui/core'
+import { getRestaurantsList } from '../../Actions/feedPageAction'
+import TopBar from '../../Components/TopBar'
+import RestaurantFilterBar from '../../Components/RestaurantFilterBar'
+import BottomNavigationBar from '../../Components/BottomNavigation'
+import styled from 'styled-components'
+import InputAdornment from '@material-ui/core/InputAdornment';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import SearchIcon from '@material-ui/icons/Search';
+import {setCurrentPage} from "../../actions/menuAction"
+
+const BodyWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  width: 100vw;
+  padding: 0 5vw;
+`
+const SearchMessage = styled.h4`
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding-top: 8px;
+`
+
+class feedPage extends Component {
+  constructor() {
+    super();
+    this.state = {
+      showTopBar: true,
+      showTextField: true,
+      showFilterBar: true,
+      showBottomNavigation: true,
+      showTopBarTitle: 'Rappi4',
+      showSearchPage: true,
+      showBackButton: false
 
   const BodyWrapper = styled.div`
     display: flex;
@@ -103,19 +129,20 @@
         />
       )
 
-      const textField = (
-        <TextField
-          id="outlined-basic"
-          label="restaurante"
-          variant="outlined"
-          startAdornment={
+    const textField = (
+      <TextField
+        variant="outlined"
+        placeholder="Restaurante"
+        id="input-with-icon-textfield"
+        InputProps={{
+          startAdornment: (
             <InputAdornment position="start">
-              <AccountCircle />
+              <SearchIcon />
             </InputAdornment>
-          }
-          onClick={this.renderSearchPage}
-        />
-      )
+          )
+        }}
+        onClick={this.renderSearchPage}
+      />)
 
       const filterBar = (
         <RestaurantFilterBar />
