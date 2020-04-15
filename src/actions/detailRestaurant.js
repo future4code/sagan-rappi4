@@ -11,6 +11,15 @@ export const setRestaurant = (restaurant) => {
     }
 }
 
+export const setCart = (cart) => {
+    return {
+        type: 'SET_CART',
+        payload: {
+            cart
+        }
+    }
+}
+
 
 export const getRestaurantDetail = (id) => async (dispatch) => {
     /* const token = window.localStorage.getItem('token') */
