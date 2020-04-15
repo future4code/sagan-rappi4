@@ -32,13 +32,13 @@ function Router(props) {
   return (
     <ConnectedRouter history={props.history}>
       <Switch>
+        <Route exact path={routes.restaurantPage} component={restaurantPage} />
         <Route exact path={routes.root} component={splashscreen} />
         <Route exact path={routes.loginPage} component={loginPage} />
-        {/* <Route exact path={routes.signUpPage} component={signUpPage} /> */}
+        <Route exact path={routes.signUpPage} component={signUpPage} />
         <Route exact path={routes.informAddressPage} component={informAddressPage} />
         <Route exact path={routes.feedPage} component={feedPage} />
         <Route exact path={routes.searchPage} component={searchPage} />
-        <Route exact path={routes.restaurantPage} component={restaurantPage} />
         <Route exact path={routes.cartPage} component={cartPage} />
         <Route exact path={routes.profilePage} component={profilePage} />
         <Route exact path={routes.editProfilePage} component={editProfilePage} />
