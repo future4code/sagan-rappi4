@@ -5,13 +5,13 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux'
-import { getRestaurantsList } from '../actions/feedPageAction'
+import { getRestaurantsList, showRestaurantDetail } from '../actions/feedPageAction'
 import { Card } from '@material-ui/core'
 import styled from 'styled-components'
 
 const CardWrapper = styled.div`
   display: flex;
-  margin: 10px 0;
+  margin: 10px 5vw;
   width: 90vw;
 `
 const PhotoWrapper = styled.img`
@@ -57,18 +57,22 @@ function a11yProps(index) {
     "aria-controls": `scrollable-auto-tabpanel-${index}`,
   }
 }
+function getRestaurantDetail(restaurantId, props) {
+  props.goToRestaurantDetail(restaurantId)
+  console.log(restaurantId)
+}
 
-function restaurantMap(restaurants) {
+function restaurantMap(restaurants, props) {
   return restaurants.map((element) => {
     return (
-      <CardWrapper>
+      <CardWrapper onClick={() => {getRestaurantDetail(element.id, props)}}>
         <Card key={element.id}>
           <PhotoWrapper src={element.logoUrl} alt='Restaurant Photo' />
           <TextWrapper>
             <Typography variant="subtitle1" color="primary">{element.name}</Typography>
             <TimeAndShipping>
               <Typography color="secondary">{`${element.deliveryTime} min`}</Typography>
-              <Typography color="secondary">{`Frete ${element.shipping ? "R$"+element.shipping : 'Grátis'}`}</Typography>
+              <Typography color="secondary">{`Frete ${element.shipping ? "R$" + element.shipping + ',00' : 'Grátis'}`}</Typography>
             </TimeAndShipping>
           </TextWrapper>
         </Card>
@@ -126,7 +130,8 @@ function RestaurantFilterBar(props) {
       </AppBar>
 
       {restaurantMap(
-        showRestaurants.length === 0 ? props.getMyRestaurants : showRestaurants
+        showRestaurants.length === 0 ? props.getMyRestaurants : showRestaurants,
+        props
       )}
     </div>
   )
@@ -135,6 +140,7 @@ function RestaurantFilterBar(props) {
 function mapDispatchToProps(dispatch) {
   return {
     getPosts: () => dispatch(getRestaurantsList()),
+    goToRestaurantDetail: (restaurantId) => dispatch(showRestaurantDetail(restaurantId))
   }
 }
 
