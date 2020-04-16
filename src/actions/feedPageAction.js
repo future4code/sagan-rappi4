@@ -45,7 +45,7 @@ export const getRestaurantsList = () => async (dispatch) => {
   }
 }
 export const showRestaurantDetail = (restaurantId) => async (dispatch) => {
-  // const token = window.localStorage.getItem('token')
+  const token = window.localStorage.getItem('token')
 
   try {
     const result = await axios.get(`${baseUrl}/restaurants/${restaurantId}`,
