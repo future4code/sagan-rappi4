@@ -48,7 +48,7 @@ function SearchPage(props) {
     }
   }
   return (
-    <PaperBox elevation={3}>
+    <PaperBox elevation={0}>
       {message && <SearchMessage>{message}</SearchMessage>}
       {hasFiltered && restaurantMap(filteredList, props)}
     </PaperBox>

@@ -16,6 +16,7 @@ const BottomNavigationWrapper = styled.div`
   bottom: 0;
   margin: 0;
   padding: 0;
+  border-top: 2px solid #d3d3d4 ;
 `
 
 function BottomNavigationBar(props) {
