@@ -58,7 +58,7 @@ function a11yProps(index) {
   }
 }
 
-function restaurantMap(restaurants) {
+export function restaurantMap(restaurants) {
   return restaurants.map((element) => {
     return (
       <CardWrapper>

@@ -3,13 +3,15 @@ import { connect } from 'react-redux'
 import { TextField } from '@material-ui/core'
 import { getRestaurantsList } from '../../actions/feedPageAction'
 import TopBar from '../../Components/TopBar'
-import RestaurantFilterBar from '../../Components/RestaurantFilterBar'
+import RestaurantFilterBar, { restaurantMap } from '../../Components/RestaurantFilterBar'
 import BottomNavigationBar from '../../Components/BottomNavigation'
 import styled from 'styled-components'
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import SearchIcon from '@material-ui/icons/Search';
 import {setCurrentPage, setShowMenu} from "../../actions/menuAction"
+import SearchPage from './searchPage';
+
 const BodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -32,7 +34,7 @@ class feedPage extends Component {
       showFilterBar: true,
       showBottomNavigation: true,
       showTopBarTitle: 'Rappi4',
-      showSearchPage: true,
+      showSearchPage: {},
       showBackButton: false
     }
   }
@@ -48,7 +50,7 @@ class feedPage extends Component {
       showFilterBar: true,
       showBottomNavigation: true,
       showTopBarTitle: 'Rappi4',
-      showSearchPage: '',
+      showSearchPage: {},
       showBackButton: false
     })
   }
@@ -59,7 +61,7 @@ class feedPage extends Component {
       showFilterBar: false,
       showBottomNavigation: true,
       showTopBarTitle: 'Meu carrinho',
-      showSearchPage: '',
+      showSearchPage: {},
       showBackButton: false
     })
   }
@@ -70,24 +72,25 @@ class feedPage extends Component {
       showFilterBar: false,
       showBottomNavigation: true,
       showTopBarTitle: 'Meu perfil',
-      showSearchPage: '',
+      showSearchPage: {},
       showBackButton: false
     })
   }
-  renderSearchPage = () => {
+  renderSearchPage = (event) => {
     this.setState({
       showTopBar: true,
       showTextField: true,
       showFilterBar: false,
       showBottomNavigation: true,
       showTopBarTitle: 'Busca',
-      showSearchPage: 'Busque por nome de restaurante',
+      showSearchPage: { show: true, search: event ? event.target.value : '' },
       showBackButton: true
     })
   }
   renderBackButton = () => {
     this.setState({
-      showBackButton: true
+      showBackButton: true,
+      showSearchPage: {},
     })
   }
   render() {
@@ -109,7 +112,8 @@ class feedPage extends Component {
             </InputAdornment>
           )
         }}
-        onClick={this.renderSearchPage}
+        value={this.state.showSearchPage.search || ''}
+        onChange={this.renderSearchPage}
       />)
     const filterBar = (
       <RestaurantFilterBar />
@@ -121,13 +125,16 @@ class feedPage extends Component {
         showProfile={this.renderProfilePage}
       />
     )
+    const searchList = (
+      <SearchPage search={this.state.showSearchPage.search} />
+    )
     return (
       <div>
         {this.state.showTopBar ? topBar : ""}
         <BodyWrapper>
           {this.state.showTextField ? textField : ""}
-          <SearchMessage>{this.state.showSearchPage}</SearchMessage>
           {this.state.showFilterBar ? filterBar : ""}
+          {this.state.showSearchPage.show ? searchList : ""}
         </BodyWrapper>
       </div>
     )
