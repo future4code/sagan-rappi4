@@ -3,7 +3,7 @@ import * as IAS from "./informAdressPageStyled";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router';
-import { createAddress } from '../../Actions/ActionsSignUp'
+import { createAddress } from '../../actions/ActionsSignUp'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
