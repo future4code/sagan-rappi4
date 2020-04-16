@@ -5,7 +5,7 @@ import { push } from "connected-react-router";
 import TopBar from '../../Components/TopBar'
 import BottomNavigationBar from '../../Components/BottomNavigation'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import {setCurrentPage} from "../../actions/menuAction"
+import {setCurrentPage, setShowMenu} from "../../actions/menuAction"
 
 //COLOCAR TOKEN DO LOCALSTORAGE GERADO PELO LOGIN
 const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlgwVGV0S0tkeVRoOW4zSFR6TENrIiwibmFtZSI6IkFuZHJpdXMiLCJlbWFpbCI6ImFuZHJpdXMucm9jaGFsYXphcmlub0BnbWFpbC5jb20iLCJjcGYiOiIxMTEuMTIxLjExMS0xMSIsImhhc0FkZHJlc3MiOnRydWUsImFkZHJlc3MiOiJBdi4gRHVxdWUgZGUgY2F4aWFzLCAxNzcsIDcxIC0gVmlsYSBOLiBDb25jZWnDp8OjbyIsImlhdCI6MTU4Njg2NjU2N30.erQsTxDL6Q6vDx8zGA1fIONJQVqNkLg-Qlz9VBfn4oM"
@@ -28,6 +28,7 @@ class cartPage extends React.Component {
     componentDidMount() {
         this.props.getAddress(token)
         this.props.setCurrentPage("cart")
+        this.props.setShowMenu(true)
     }
 
     showAdress = () => {
@@ -112,7 +113,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     getAddress: (token, restaurantId, products, paymentMethod) => dispatch(getAddress(token, restaurantId, products, paymentMethod)),
     placeOrder: (token, restaurantId, products, paymentMethod) => dispatch(placeOrder(token, restaurantId, products, paymentMethod)),
-    setCurrentPage: (currentPage) => dispatch(setCurrentPage(currentPage))
+    setCurrentPage: (currentPage) => dispatch(setCurrentPage(currentPage)),
+    setShowMenu: (show) => dispatch(setShowMenu(show))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(cartPage);

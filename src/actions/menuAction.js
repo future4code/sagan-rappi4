@@ -6,3 +6,12 @@ export const setCurrentPage = (currentPage) => {
         }
     }
 }
+
+export const setShowMenu = (show) => {
+    return {
+        type: 'SET_SHOW_MENU',
+        payload: {
+            show
+        }
+    }
+}

@@ -17,6 +17,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { generateReducers } from "../../reducers";
 import { routerMiddleware } from "connected-react-router";
 import BottomNavigationBar from '../../Components/BottomNavigation'
+import { connect } from "react-redux"
 
 
 const generateClassName = createGenerateClassName();
@@ -48,5 +49,6 @@ export const App = () => (
     </JssProvider>
   </Provider>
 );
+
 
 export default App;
