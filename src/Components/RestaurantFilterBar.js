@@ -62,6 +62,7 @@ function getRestaurantDetail(restaurantId, props) {
   console.log(restaurantId)
 }
 
+
 function restaurantMap(restaurants, props) {
   return restaurants.map((element) => {
     return (
