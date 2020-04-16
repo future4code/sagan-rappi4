@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 import { loginUser } from './actions';
 import { push } from 'connected-react-router';
 import { routes } from '../../containers/Router';

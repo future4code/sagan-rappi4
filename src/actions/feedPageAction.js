@@ -14,6 +14,15 @@ export const showRestaurantsList = (restaurants) => {
     }
   }
 }
+export const sendID = (restaurantInfo) => {
+  return {
+    type: 'SEND_ID',
+    payload: {
+      restaurantInfo
+    }
+  }
+}
+
 
 
 export const getRestaurantsList = () => async (dispatch) => {
@@ -32,6 +41,28 @@ export const getRestaurantsList = () => async (dispatch) => {
     // dispatch(push(routes.feedPage))
 
   } catch (error) {
+    console.log(error)
+  }
+}
+export const showRestaurantDetail = (restaurantId) => async (dispatch) => {
+  // const token = window.localStorage.getItem('token')
+
+  try {
+    const result = await axios.get(`${baseUrl}/restaurants/${restaurantId}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          auth: token
+        }
+      }
+    )
+    console.log(restaurantId)
+    console.log(result.data.restaurant.products)
+    dispatch(sendID(restaurantId))
+    dispatch(push(routes.restaurantPage))
+    
+  } catch (error) {
+    console.log(restaurantId)
     console.log(error)
   }
 }
