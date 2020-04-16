@@ -62,8 +62,7 @@ function getRestaurantDetail(restaurantId, props) {
   console.log(restaurantId)
 }
 
-
-function restaurantMap(restaurants, props) {
+export function restaurantMap(restaurants, props) {
   return restaurants.map((element) => {
     return (
       <CardWrapper onClick={() => {getRestaurantDetail(element.id, props)}}>

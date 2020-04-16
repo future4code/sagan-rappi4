@@ -1,6 +1,7 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import { restaurantMap } from '../../Components/RestaurantFilterBar';
+import { showRestaurantDetail } from '../../actions/feedPageAction'
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
@@ -9,6 +10,7 @@ const PaperBox = styled(Paper)`
   padding: 10px;
   > div {
     width: 100% !important;
+    margin: 0 !important;
     img {
       width: 100% !important;
     }
@@ -48,13 +50,19 @@ function SearchPage(props) {
   return (
     <PaperBox elevation={3}>
       {message && <SearchMessage>{message}</SearchMessage>}
-      {hasFiltered && restaurantMap(filteredList)}
+      {hasFiltered && restaurantMap(filteredList, props)}
     </PaperBox>
   );
 }
 
-const mapState = (state) => ({
+const mapStateToProps = (state) => ({
   restaurantList: state.restaurants.restaurantsList,
 });
 
-export default connect(mapState)(SearchPage);
+function mapDispatchToProps(dispatch) {
+  return {
+    goToRestaurantDetail: (restaurantId) => dispatch(showRestaurantDetail(restaurantId))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

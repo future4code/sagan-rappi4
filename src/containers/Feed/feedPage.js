@@ -135,10 +135,9 @@ class feedPage extends Component {
         {this.state.showTopBar ? topBar : ""}
         <BodyWrapper>
           {this.state.showTextField ? textField : ""}
-          <SearchMessage>{this.state.showSearchPage}</SearchMessage>
-        </BodyWrapper>
           {this.state.showFilterBar ? filterBar : ""}
-          <BottomDiv />
+          {this.state.showSearchPage.show ? searchList : ""}
+        </BodyWrapper>
       </div>
     )
   }
