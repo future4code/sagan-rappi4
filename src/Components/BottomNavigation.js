@@ -8,7 +8,7 @@ import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
 import { connect } from "react-redux";
 import { routes } from '../containers/Router/index';
 import { push } from "connected-react-router";
-import currentPage from "../Actions/feedPageAction"
+import currentPage from "../actions/feedPageAction"
 
 const BottomNavigationWrapper = styled.div`
   position: fixed;
