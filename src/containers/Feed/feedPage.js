@@ -10,10 +10,10 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import SearchIcon from '@material-ui/icons/Search';
 import {setCurrentPage, setShowMenu} from "../../actions/menuAction"
+
 const BodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 80vh;
   width: 100vw;
   padding: 0 5vw;
 `
@@ -22,6 +22,9 @@ const SearchMessage = styled.h4`
   justify-content: center;
   margin: 0;
   padding-top: 8px;
+`
+const BottomDiv = styled.div`
+  height: 10vh;
 `
 class feedPage extends Component {
   constructor() {
@@ -105,7 +108,7 @@ class feedPage extends Component {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon />
+              <SearchIcon color='secondary'/>
             </InputAdornment>
           )
         }}
@@ -127,8 +130,9 @@ class feedPage extends Component {
         <BodyWrapper>
           {this.state.showTextField ? textField : ""}
           <SearchMessage>{this.state.showSearchPage}</SearchMessage>
-          {this.state.showFilterBar ? filterBar : ""}
         </BodyWrapper>
+          {this.state.showFilterBar ? filterBar : ""}
+          <BottomDiv />
       </div>
     )
   }
