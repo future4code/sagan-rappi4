@@ -22,36 +22,38 @@ function BottomNavigationBar(props) {
   console.log(props.currentPage)
   const [value, setValue] = React.useState(props.currentPage);
 
-  return (
-    <BottomNavigationWrapper>
-      <BottomNavigation
-        value={props.currentPage}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      >
-        {/* <BottomNavigationAction onClick={() => { props.showFeed() }} icon={<HomeOutlinedIcon />} />
-        <BottomNavigationAction onClick={() => { props.showCart() }} icon={<ShoppingCartOutlinedIcon />} />
-        <BottomNavigationAction onClick={() => { props.showProfile() }} icon={<PermIdentityOutlinedIcon />} /> */}
-        <BottomNavigationAction value="feed" onClick={() => { props.goToFeed() }} icon={<HomeOutlinedIcon />} />
-        <BottomNavigationAction value="cart" onClick={() => { props.goToCart() }} icon={<ShoppingCartOutlinedIcon />} />
-        <BottomNavigationAction value="profile" onClick={() => { props.goToProfile() }} icon={<PermIdentityOutlinedIcon />} />
-      </BottomNavigation>
-    </BottomNavigationWrapper>
-  )
+  if (props.showMenu !== false){
+    return (
+      <BottomNavigationWrapper>
+        <BottomNavigation
+          value={props.currentPage}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+        >
+          <BottomNavigationAction value="feed" onClick={() => { props.goToFeed() }} icon={<HomeOutlinedIcon />} />
+          <BottomNavigationAction value="cart" onClick={() => { props.goToCart() }} icon={<ShoppingCartOutlinedIcon />} />
+          <BottomNavigationAction value="profile" onClick={() => { props.goToProfile() }} icon={<PermIdentityOutlinedIcon />} />
+        </BottomNavigation>
+      </BottomNavigationWrapper>
+    )
+  }else{
+    return false
+  }
 }
 
 const mapStateToProps = state => {
   return {
-    currentPage: state.menu.currentPage
+    currentPage: state.menu.currentPage,
+    showMenu: state.menu.showMenu
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   goToFeed: () => dispatch(push(routes.feedPage)),
   goToCart: () => dispatch(push(routes.cartPage)),
-  goToProfile: ()=>dispatch(push(routes.profilePage)),
+  goToProfile: () => dispatch(push(routes.profilePage)),
 })
 
-export default connect (mapStateToProps, mapDispatchToProps) (BottomNavigationBar)
+export default connect(mapStateToProps, mapDispatchToProps)(BottomNavigationBar)
 

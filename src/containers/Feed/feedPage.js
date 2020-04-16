@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import SearchIcon from '@material-ui/icons/Search';
-import { setCurrentPage } from "../../actions/menuAction"
+import {setCurrentPage, setShowMenu} from "../../actions/menuAction"
 const BodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -39,6 +39,7 @@ class feedPage extends Component {
   componentDidMount() {
     this.props.getPosts()
     this.props.setCurrentPage("feed")
+    this.props.setShowMenu(true)
   }
   renderFeedPage = () => {
     this.setState({
@@ -135,7 +136,8 @@ class feedPage extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     getPosts: () => dispatch(getRestaurantsList()),
-    setCurrentPage: (currentPage) => dispatch(setCurrentPage(currentPage))
+    setCurrentPage: (currentPage) => dispatch(setCurrentPage(currentPage)),
+    setShowMenu: (show) => dispatch(setShowMenu(show))
   };
 }
 function mapStateToProps(state) {
