@@ -6,11 +6,10 @@ import TopBar from '../../Components/TopBar'
 import RestaurantFilterBar from '../../Components/RestaurantFilterBar'
 import BottomNavigationBar from '../../Components/BottomNavigation'
 import styled from 'styled-components'
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-
-
+import SearchIcon from '@material-ui/icons/Search';
+import { setCurrentPage } from "../../actions/menuAction"
 const BodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -24,7 +23,6 @@ const SearchMessage = styled.h4`
   margin: 0;
   padding-top: 8px;
 `
-
 class feedPage extends Component {
   constructor() {
     super();
@@ -36,14 +34,12 @@ class feedPage extends Component {
       showTopBarTitle: 'Rappi4',
       showSearchPage: true,
       showBackButton: false
-
     }
   }
-
   componentDidMount() {
     this.props.getPosts()
+    this.props.setCurrentPage("feed")
   }
-
   renderFeedPage = () => {
     this.setState({
       showTopBar: true,
@@ -93,7 +89,6 @@ class feedPage extends Component {
       showBackButton: true
     })
   }
-
   render() {
     const topBar = (
       <TopBar
@@ -101,25 +96,23 @@ class feedPage extends Component {
         returnButton={this.state.showBackButton ? <ArrowBackIosIcon onClick={this.renderFeedPage} fontSize='small' /> : ''}
       />
     )
-
     const textField = (
       <TextField
-        id="outlined-basic"
-        label="restaurante"
         variant="outlined"
-        startAdornment={
-          <InputAdornment position="start">
-            <AccountCircle />
-          </InputAdornment>
-        }
+        placeholder="Restaurante"
+        id="input-with-icon-textfield"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          )
+        }}
         onClick={this.renderSearchPage}
-      />
-    )
-
+      />)
     const filterBar = (
       <RestaurantFilterBar />
     )
-
     const bottomNavigation = (
       <BottomNavigationBar
         showCart={this.renderCartPage}
@@ -127,7 +120,6 @@ class feedPage extends Component {
         showProfile={this.renderProfilePage}
       />
     )
-
     return (
       <div>
         {this.state.showTopBar ? topBar : ""}
@@ -136,22 +128,19 @@ class feedPage extends Component {
           <SearchMessage>{this.state.showSearchPage}</SearchMessage>
           {this.state.showFilterBar ? filterBar : ""}
         </BodyWrapper>
-        {this.state.showBottomNavigation ? bottomNavigation : ""}
       </div>
     )
   }
 }
-
 function mapDispatchToProps(dispatch) {
   return {
     getPosts: () => dispatch(getRestaurantsList()),
+    setCurrentPage: (currentPage) => dispatch(setCurrentPage(currentPage))
   };
 }
-
 function mapStateToProps(state) {
   return {
     getMyRestaurants: state.restaurants.restaurantsList
   };
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(feedPage);

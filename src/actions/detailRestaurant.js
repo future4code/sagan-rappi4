@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 
 const baseUrl = 'https://us-central1-missao-newton.cloudfunctions.net/rappi4'
 

@@ -2,7 +2,7 @@ import React from "react";
 import { ConnectedRouter } from "connected-react-router";
 import { Switch, Route } from "react-router-dom";
 import loginPage from "../Login/loginPage";
-// import signUpPage from "../SignUp/signUpPage";
+// import signUpPage from "../SignUp/signup";
 import informAddressPage from "../Profile/informAdressPage";
 import feedPage from "../Feed/feedPage";
 import searchPage from "../Feed/searchPage";
@@ -15,7 +15,7 @@ import editAddressPage from "../Profile/editProfilePage";
 export const routes = {
   root: "/",
   loginPage: "/login",
-  signUpPage: "/signup",
+  // signUpPage: "/signup",
   informAddressPage: "/informAdress",
   feedPage: "/feed",
   searchPage: "/search",
@@ -33,6 +33,7 @@ function Router(props) {
       <Switch>
         <Route exact path={routes.root} component={loginPage} />
         <Route exact path={routes.restaurantPage} component={restaurantPage} />
+        <Route exact path={routes.root} component={feedPage} />
         <Route exact path={routes.loginPage} component={loginPage} />
         {/* <Route exact path={routes.signUpPage} component={signUpPage} /> */}
         <Route exact path={routes.informAddressPage} component={informAddressPage} />
