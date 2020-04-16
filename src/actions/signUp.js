@@ -17,11 +17,14 @@ export const signUp = (formData) => async (dispatch) => {
 
      try {
         const response = await axios.post(`${baseUrl}/signup`, data)
-        alert('funfou')
-/*         dispatch(push(routes.informAddressPage)) */
-        //Verificar se esta é a página de cadastrar endereço
 
+        const token = response.data.token;
+
+        window.localStorage.setItem('token', token)
+        
+        dispatch(push(routes.informAddressPage)) 
+        
     } catch (error) {
-        console.error(error)
+        alert('Por favor, tente novamente.')
     }
 } 
