@@ -62,12 +62,12 @@ const form = [
         type: "text",
         label: "CPF",
         placeholder: "000.000.000-00",
-        pattern: "^\d{3}\.\d{3}\.\d{3}\-\d{2}$",
+        pattern: "^[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-\[0-9]{2}$",
         required: true
     },
     {
         name: "password",
-        type: "text",
+        type: "password",
         label: "Senha",
         placeholder: "Minimo 6 caracteres",
         pattern: "^.{6,}$",
@@ -75,7 +75,7 @@ const form = [
     },
     {
         name: "confirmPassword",
-        type: "text",
+        type: "password",
         label: "Confirmar",
         placeholder: "Confirme a senha anterior",
         pattern: "^.{6,}$",
@@ -133,7 +133,7 @@ class SignUp extends Component {
                                 />
                             </Container>
                         ))}
-                        <Btn variant="contained" color="primary" type="submit" fullWidth={true} onClick={() => this.handleOnSubmit()}> Criar </Btn>
+                        <Btn variant="contained" color="primary" type="submit" fullWidth={true}> Criar </Btn>
                 </Form>
             </Wrapper>
         )

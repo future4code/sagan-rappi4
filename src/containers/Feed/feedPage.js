@@ -15,7 +15,6 @@ import SearchPage from './searchPage';
 const BodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 80vh;
   width: 100vw;
   padding: 0 5vw;
 `
@@ -24,6 +23,9 @@ const SearchMessage = styled.h4`
   justify-content: center;
   margin: 0;
   padding-top: 8px;
+`
+const BottomDiv = styled.div`
+  height: 10vh;
 `
 class feedPage extends Component {
   constructor() {
@@ -108,7 +110,7 @@ class feedPage extends Component {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon />
+              <SearchIcon color='secondary'/>
             </InputAdornment>
           )
         }}
@@ -133,9 +135,10 @@ class feedPage extends Component {
         {this.state.showTopBar ? topBar : ""}
         <BodyWrapper>
           {this.state.showTextField ? textField : ""}
-          {this.state.showFilterBar ? filterBar : ""}
-          {this.state.showSearchPage.show ? searchList : ""}
+          <SearchMessage>{this.state.showSearchPage}</SearchMessage>
         </BodyWrapper>
+          {this.state.showFilterBar ? filterBar : ""}
+          <BottomDiv />
       </div>
     )
   }
