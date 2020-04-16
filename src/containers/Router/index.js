@@ -15,7 +15,7 @@ import editAddressPage from "../Profile/editProfilePage";
 export const routes = {
   root: "/",
   loginPage: "/login",
-  // signUpPage: "/signup",
+  signUpPage: "/signup",
   informAddressPage: "/informAdress",
   feedPage: "/feed",
   searchPage: "/search",

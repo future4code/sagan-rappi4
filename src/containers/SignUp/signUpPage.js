@@ -4,6 +4,11 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { TextField, Typography, Button, Text } from '@material-ui/core/';
 import LogoInv from '../../images/logo/logo-future-eats-invert.svg';
+import TopBar from '../../Components/TopBar'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import { push } from "connected-react-router";
+import { routes } from '../Router';
+
 
 const Wrapper = styled.div`
   margin: 20px auto;
@@ -103,10 +108,10 @@ class SignUp extends Component {
     render() {
         return (
             <Wrapper>
-                 <TopBar
+                <TopBar
                     title={this.state.showTopBarTitle}
-                    returnButton={this.state.showBackButton ? <ArrowBackIosIcon onClick={this.renderFeedPage} fontSize='small' /> : ''}
-                />
+                    returnButton={<ArrowBackIosIcon onClick={this.props.redirectToLogin} fontSize='small' />}
+                /> 
                 <Logo src={LogoInv} />
                 <Form onSubmit={this.handleOnSubmit}>
                     <Title variant="subtitle1"> Cadastrar </Title>
@@ -136,7 +141,8 @@ class SignUp extends Component {
 }    
 
 const mapDispatchToProps = dispatch => ({
-    signUp: (formData) => dispatch(signUp(formData))
+    signUp: (formData) => dispatch(signUp(formData)),
+    redirectToLogin: () => dispatch(push(routes.loginPage))
 })
 
 export default connect(null, mapDispatchToProps)(SignUp)
