@@ -10,10 +10,14 @@ import { push } from "connected-react-router";
 import { routes } from '../Router';
 
 
+// verificar senha e confirm senha
+// colocar o olhinho pra mostrar a senha
+
 const Wrapper = styled.div`
-  margin: 20px auto;
+  margin: 0; 
+   /* 20px auto; 
   width: 400px;
-  max-width: 95vw;
+  max-width: 95vw; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,7 +27,8 @@ const Wrapper = styled.div`
   }
 `
 const Logo = styled.img`
-  margin: 7vh 0 3vh;
+  margin: 3vh 0 1vh;
+  /* 7vh 0 3vh; */
 `
 const Form = styled.form`
   width: 95%;
@@ -33,7 +38,7 @@ const Title = styled(Typography)`
   text-align: center;
 `
 const Container = styled.div`
-  margin: 5vh 0;
+  margin: 4vh 0;
 `
 const Btn = styled(Button)`
   color: black;
@@ -104,6 +109,10 @@ class SignUp extends Component {
         event.preventDefault()
         this.props.signUp(this.state.form)
     }
+
+/*     handleClickShowPassword = () => {
+        setValues({ ...values, showPassword: !values.showPassword });
+    }; */
 
     render() {
         return (
