@@ -94,7 +94,7 @@ class EditUser extends Component {
             <Wrapper>
                 <TopBar
                     title={this.state.showTopBarTitle}
-                    returnButton={<ArrowBackIosIcon onClick={this.props.redirectToLogin} fontSize='small' />}
+                    returnButton={<ArrowBackIosIcon onClick={this.props.redirectToProfile} fontSize='small' />}
                 /> 
                 <Logo src={LogoInv} />
                 <Form onSubmit={this.handleOnSubmit}>
@@ -126,7 +126,7 @@ class EditUser extends Component {
 
 const mapDispatchToProps = dispatch => ({
     requestEditUser: (formData) => dispatch(requestEditUser(formData)),
-    // redirectToLogin: () => dispatch(push(routes.loginPage))
+    redirectToProfile: () => dispatch(push(routes.profilePage))
 })
 
 export default connect(null, mapDispatchToProps)(EditUser)
