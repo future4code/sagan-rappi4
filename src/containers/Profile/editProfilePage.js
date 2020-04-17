@@ -46,7 +46,7 @@ const form = [
         name: "name",
         type: "text",
         label: "Nome",
-        placeholder: "Nome e sobrenome",
+        placeholder: "Nome",
         pattern: "^[a-z-A-Z\\s]{3,}$",
         required: true,
     },
@@ -54,7 +54,7 @@ const form = [
         name: "email",
         type: "email",
         label: "E-mail",
-        placeholder: "email@email.com",
+        placeholder: "Email",
         required: true,
     },
     {
@@ -82,9 +82,9 @@ class EditUser extends Component {
     componentDidMount() {
         const token = window.localStorage.getItem('token')
         const localData = JSON.parse(window.localStorage.getItem('rappi4_data')) || {}
-        console.log(localData)
-        console.log(localData.user.name)
         this.setState({ name: localData.user.name })
+        this.setState({ cpf: localData.user.cpf })
+        this.setState({ email: localData.user.email })
     }
 
     handleOnChangeForm = (event) => {
@@ -118,7 +118,7 @@ class EditUser extends Component {
                                     required={input.required}
                                     type={input.type}
                                     name={input.name}
-                                    placeholder={input.placeholder}
+                                    placeholder={this.state[input.name]}
                                     onChange={this.handleOnChangeForm}
                                     fullWidth={true}
                                     variant="outlined"
@@ -131,7 +131,6 @@ class EditUser extends Component {
                         ))}
                         <Btn variant="contained" color="primary" type="submit" fullWidth={true}> Criar </Btn>
                 </Form>
-                <p>Nome: {this.state.name}</p>
             </Wrapper>
         )
     }
@@ -143,8 +142,7 @@ const mapStateToProps = (state) => ({
   });
 
 const mapDispatchToProps = dispatch => ({
-    requestEditUser: (formData) => dispatch(requestEditUser(formData)),
-    // goToProfilePage: () => dispatch(push(routes.profilePage))
+    requestEditUser: (formData) => dispatch(requestEditUser(formData)),    
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditUser)
