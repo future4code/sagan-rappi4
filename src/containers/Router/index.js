@@ -42,7 +42,7 @@ function Router(props) {
         <Route exact path={routes.cartPage} component={cartPage} />
         <Route exact path={routes.profilePage} component={profilePage} />
         <Route exact path={routes.editProfilePage} component={editProfilePage} />
-        {/* <Route exact path={routes.editAddressPage} component={editAddressPage} /> */}
+        <Route exact path={routes.editAddressPage} component={editAddressPage} />
       </Switch>
     </ConnectedRouter>
   );
