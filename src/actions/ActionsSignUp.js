@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { loginUser } from './Login/actions';
 import { push } from "connected-react-router"
 import { routes } from "../containers/Router"
 
@@ -22,8 +23,8 @@ export const createAddress = (userAddress) => async (dispatch) => {
         {
             headers: { auth: token }}
         )
-
-        console.log(result.data.userAddress)
+        const { user, token } = result.data
+        dispatch(loginUser(user, token));
         dispatch(setAddAddressAction(result.data.userAddress))
         dispatch(push(routes.feedPage))
     }

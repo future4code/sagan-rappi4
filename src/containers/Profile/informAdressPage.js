@@ -23,6 +23,16 @@ class informAddressPage extends Component {
     };
   }
 
+  componentDidMount = () => {
+    const token = window.localStorage.getItem('token')
+    const { user } = this.props
+    if( !token ){        
+      this.props.goToHomePage()
+    } else if (user.hasAddress) {
+      this.props.goToFeedPage()
+    }
+  }
+
   handleFieldStreet = (event) => {
     this.setState({ street: event.target.value })
   };
@@ -69,15 +79,6 @@ class informAddressPage extends Component {
 
 
   render() {
-    
-
-    this.componentDidMount = () => {
-      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InFhSzlGQVZ2QkttUGVhMkFHdnN0IiwibmFtZSI6IlZpdG9yTG9wZXMiLCJlbWFpbCI6ImxvcGVzc3NickBnbWFpbC5jb20iLCJjcGYiOiI5OTkuOTk5Ljk5OS05OSIsImhhc0FkZHJlc3MiOnRydWUsImFkZHJlc3MiOiJSLiBMb3JvLCAxNTI2LCAyMjMgLSBuYWRhIiwiaWF0IjoxNTg2ODkxODcwfQ.SRXANWnaclJIAj8SONM_IFwXk1-4q-y30RSCY4RqKQY"
-      if( !token ){        
-        this.props.goToHomePage()
-      }
-    }
-
 
     return (
       <div>
@@ -179,10 +180,17 @@ class informAddressPage extends Component {
   }
 }
 
+function mapStateToProps(state){
+  return{
+    user: state.users.user
+  }
+}
 function mapDispatchToProps(dispatch){
     return{
       createAddress: (userAddress) => dispatch(createAddress(userAddress)),
-      goToLoginPage: () => dispatch(push(routes.loginPage))
+      goToHomePage: () => dispatch(push(routes.root)),
+      goToFeedPage: () => dispatch(push(routes.feedPage)),
+
     }
 }
-export default connect(null, mapDispatchToProps) (informAddressPage)
+export default connect(mapStateToProps, mapDispatchToProps) (informAddressPage)
