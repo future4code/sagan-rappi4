@@ -21,7 +21,6 @@ const initialState = {
       }
 
       case 'SET_CART': {
-        console.log(action.payload.cart)
         return {
           ...state,
           cart: action.payload.cart
