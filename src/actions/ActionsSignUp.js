@@ -14,7 +14,7 @@ const setAddAddressAction = (userAddress) => {
 }
 
 export const createAddress = (userAddress) => async (dispatch) => {
-    // ----------- esse token vem do SignUp que ainda nao esta pronto
+    
     const token = window.localStorage.getItem('token')
     console.log(userAddress)
     try {
@@ -22,6 +22,8 @@ export const createAddress = (userAddress) => async (dispatch) => {
         {
             headers: { auth: token }}
         )
+        console.log('novotokone ', result.data.token)
+        localStorage.setItem('token', result.data.token)
 
         console.log(result.data.userAddress)
         dispatch(setAddAddressAction(result.data.userAddress))
