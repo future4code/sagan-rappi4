@@ -22,9 +22,17 @@ export const signUp = (formData) => async (dispatch) => {
 
         window.localStorage.setItem('token', token)
         
+        dispatch(setSignUp(dispatch(response.data.formData)))
         dispatch(push(routes.informAddressPage)) 
         
     } catch (error) {
         alert('Por favor, tente novamente.')
     }
 } 
+
+export const setSignUp = (formData) => {
+    return {
+        type: 'SIGN_UP',
+        payload: formData
+    }
+}

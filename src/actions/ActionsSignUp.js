@@ -15,7 +15,7 @@ const setAddAddressAction = (userAddress) => {
 }
 
 export const createAddress = (userAddress) => async (dispatch) => {
-    // ----------- esse token vem do SignUp que ainda nao esta pronto
+    
     const token = window.localStorage.getItem('token')
     console.log(userAddress)
     try {
@@ -29,8 +29,7 @@ export const createAddress = (userAddress) => async (dispatch) => {
         dispatch(push(routes.feedPage))
     }
     catch(error){
-        console.log(error)
-        
+        console.log(error)        
         alert("Error ao tentar adicionar endereço!")
     }
 }
