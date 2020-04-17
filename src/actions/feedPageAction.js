@@ -14,11 +14,12 @@ export const showRestaurantsList = (restaurants) => {
     }
   }
 }
-export const sendID = (restaurantInfo) => {
+export const sendID = (idRestaurant) => {
+  console.log(idRestaurant)
   return {
-    type: 'SEND_ID',
+    type: 'SET_ID',
     payload: {
-      restaurantInfo
+      idRestaurant
     }
   }
 }

@@ -7,7 +7,6 @@ import { routes } from '../Router';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CardRestaurant from '../../Components/CardRestaurant';
 import CardProduct from '../../Components/CardProduct';
@@ -15,7 +14,7 @@ import styled from 'styled-components';
 import TopBar from '../../Components/TopBar'
 import DividerBlack from '../../Components/DividerBlack'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { Typography } from '@material-ui/core';
+import { setShowMenu } from "../../actions/menuAction"
 
 
 const Wrapper = styled.div`
@@ -75,6 +74,7 @@ class RestaurantPage extends Component {
     }
 
     componentDidMount() {
+        this.props.setShowMenu(false)
         const token = window.localStorage.getItem('token')
 
         if (!token) {
@@ -83,7 +83,7 @@ class RestaurantPage extends Component {
         
         // depois lembrar de checar se tem id
         if (token && this.props.getRestaurantDetail) {
-            this.props.getRestaurantDetail(1)
+            this.props.getRestaurantDetail(this.props.idRestaurant)
             //Usando o restaurante 1 para funcionar, quando integrar trocar por this.props.restauraurant.id
         }
     }
@@ -241,14 +241,16 @@ class RestaurantPage extends Component {
 }
 
 const mapStateToProps = state => ({
-    restaurant: state.restaurants.restaurantDetailed
+    restaurant: state.restaurants.restaurantDetailed,
+    idRestaurant: state.feed.idRestaurant
 })
 
 const mapDispatchToProps = (dispatch) => ({
     redirectLogin: () => dispatch(push(routes.loginPage)),
     redirectFeed: () => dispatch(push(routes.feedPage)),
     getRestaurantDetail: (id) => dispatch(getRestaurantDetail(id)),
-    setCart: (cart) => dispatch(setCart(cart))
+    setCart: (cart) => dispatch(setCart(cart)),
+    setShowMenu: (show) => dispatch(setShowMenu(show))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RestaurantPage)

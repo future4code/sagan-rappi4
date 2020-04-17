@@ -15,8 +15,8 @@ export const setAddress = (address) => {
 
 export const getAddress = (token) => async (dispatch) => {
     try {
-        const result = await axios.get(`${baseUrl}profile/address`, { headers: { auth: token } })
-        dispatch(setAddress(result.data.address))
+        const response = await axios.get(`${baseUrl}profile/address`, { headers: { auth: token } })
+        dispatch(setAddress(response.data.address))
     }
     catch (error) {
         console.error(error)
@@ -25,7 +25,7 @@ export const getAddress = (token) => async (dispatch) => {
 
 export const getOrder = (token) => async (dispatch) => {
     try {
-        const result = await axios.get(`${baseUrl}active-order`, { headers: { auth: token } })
+        const response = await axios.get(`${baseUrl}active-order`, { headers: { auth: token } })
     }
     catch (error) {
         console.error(error)
@@ -33,13 +33,19 @@ export const getOrder = (token) => async (dispatch) => {
 }
 
 export const placeOrder = (token, restaurantId, products, paymentMethod) => async (dispatch) => {
+    const productsData = products.map(prod=>{
+        return({
+            id: prod.product.id,
+            quantity: prod.quantity
+        })
+    })
+    console.log(paymentMethod)
     const placeOrderData = {
-        products: products,
+        products: productsData,
         paymentMethod : paymentMethod
     }
-
     try {
-        const result = await axios.post(`${baseUrl}restaurants/${restaurantId}/order`, placeOrderData, { headers: { auth: token } })
+        const response = await axios.post(`${baseUrl}restaurants/${restaurantId}/order`, placeOrderData, { headers: { auth: token } })
         alert("Pedido Concluido, aguarde a entrega!")
     }
     catch (error) {
