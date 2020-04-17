@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { loginUser } from './Login/actions';
 import { push } from "connected-react-router"
 import { routes } from "../containers/Router"
 
@@ -22,16 +23,13 @@ export const createAddress = (userAddress) => async (dispatch) => {
         {
             headers: { auth: token }}
         )
-        console.log('novotokone ', result.data.token)
-        localStorage.setItem('token', result.data.token)
-
-        console.log(result.data.userAddress)
+        const { user, token } = result.data
+        dispatch(loginUser(user, token));
         dispatch(setAddAddressAction(result.data.userAddress))
         dispatch(push(routes.feedPage))
     }
     catch(error){
-        console.log(error)
-        
+        console.log(error)        
         alert("Error ao tentar adicionar endereço!")
     }
 }
