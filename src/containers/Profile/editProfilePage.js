@@ -67,12 +67,24 @@ const form = [
     }
 ]
 
+
 class EditUser extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            form: {}
+            form: {},
+            name: "",
+            cpf: "",
+            email: ""
         }
+    }
+
+    componentDidMount() {
+        const token = window.localStorage.getItem('token')
+        const localData = JSON.parse(window.localStorage.getItem('rappi4_data')) || {}
+        console.log(localData)
+        console.log(localData.user.name)
+        this.setState({ name: localData.user.name })
     }
 
     handleOnChangeForm = (event) => {
@@ -98,7 +110,7 @@ class EditUser extends Component {
                 /> 
                 <Logo src={LogoInv} />
                 <Form onSubmit={this.handleOnSubmit}>
-                    <Title variant="subtitle1"> Cadastrar </Title>
+                    <Title variant="subtitle1"> Editar </Title>
                         {form.map(input => (
                             <Container key={input.name}>
                                 <TextField
@@ -119,14 +131,20 @@ class EditUser extends Component {
                         ))}
                         <Btn variant="contained" color="primary" type="submit" fullWidth={true}> Criar </Btn>
                 </Form>
+                <p>Nome: {this.state.name}</p>
             </Wrapper>
         )
     }
 }
 
+const mapStateToProps = (state) => ({
+    signUp: state.signUp,
+    
+  });
+
 const mapDispatchToProps = dispatch => ({
     requestEditUser: (formData) => dispatch(requestEditUser(formData)),
-    redirectToProfile: () => dispatch(push(routes.profilePage))
+    // goToProfilePage: () => dispatch(push(routes.profilePage))
 })
 
-export default connect(null, mapDispatchToProps)(EditUser)
+export default connect(mapStateToProps, mapDispatchToProps)(EditUser)
