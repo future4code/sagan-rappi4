@@ -4,8 +4,9 @@ import restaurants from './restaurants';
 import users from './users';
 import cart from './cart'
 import userAddress from './userAddress'
-import menu from './menu';
-import signUp from './signUp';
+import menu from './menu'
+import profile from './profile'
+import feed from './feed'
 
 export const generateReducers = history =>
   combineReducers({
@@ -15,5 +16,6 @@ export const generateReducers = history =>
     userAddress,
     menu,
     users,
-    signUp,
+    profile,
+    feed
   });
