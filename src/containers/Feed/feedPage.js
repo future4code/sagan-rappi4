@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { TextField } from '@material-ui/core'
 import { getRestaurantsList } from '../../actions/feedPageAction'
-import TopBar from '../../Components/TopBar'
-import RestaurantFilterBar from '../../Components/RestaurantFilterBar'
-import styled from 'styled-components'
+import { setCurrentPage, setShowMenu } from "../../actions/menuAction"
+import { TextField } from '@material-ui/core'
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import SearchIcon from '@material-ui/icons/Search';
-import { setCurrentPage, setShowMenu } from "../../actions/menuAction"
+import RestaurantFilterBar from '../../Components/RestaurantFilterBar'
+import TopBar from '../../Components/TopBar'
 import SearchPage from './searchPage'
+import styled from 'styled-components'
 
 const GlobalWrapper = styled.div`
   margin: 0;
@@ -34,7 +34,6 @@ class feedPage extends Component {
       showTopBar: true,
       showTextField: true,
       showFilterBar: true,
-      showBottomNavigation: true,
       showTopBarTitle: 'Rappi4',
       showSearchPage: {},
       showBackButton: false
@@ -51,18 +50,17 @@ class feedPage extends Component {
       showTopBar: true,
       showTextField: true,
       showFilterBar: true,
-      showBottomNavigation: true,
       showTopBarTitle: 'Rappi4',
       showSearchPage: {},
       showBackButton: false
     })
+    this.props.setShowMenu(true)
   }
   renderCartPage = () => {
     this.setState({
       showTopBar: true,
       showTextField: false,
       showFilterBar: false,
-      showBottomNavigation: true,
       showTopBarTitle: 'Meu carrinho',
       showSearchPage: {},
       showBackButton: false
@@ -73,7 +71,6 @@ class feedPage extends Component {
       showTopBar: true,
       showTextField: false,
       showFilterBar: false,
-      showBottomNavigation: true,
       showTopBarTitle: 'Meu perfil',
       showSearchPage: {},
       showBackButton: false
@@ -84,11 +81,11 @@ class feedPage extends Component {
       showTopBar: true,
       showTextField: true,
       showFilterBar: false,
-      showBottomNavigation: true,
       showTopBarTitle: 'Busca',
       showSearchPage: { show: true, search: event ? event.target.value : '' },
       showBackButton: true
     })
+    this.props.setShowMenu(false)
   }
   renderBackButton = () => {
     this.setState({
