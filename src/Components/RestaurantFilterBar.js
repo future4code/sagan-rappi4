@@ -65,7 +65,7 @@ function getRestaurantDetail(restaurantId, props) {
 export function restaurantMap(restaurants, props) {
   return restaurants.map((element) => {
     return (
-      <CardWrapper onClick={() => {getRestaurantDetail(element.id, props)}}>
+      <CardWrapper onClick={() => { getRestaurantDetail(element.id, props) }}>
         <Card key={element.id}>
           <PhotoWrapper src={element.logoUrl} alt='Restaurant Photo' />
           <TextWrapper>
@@ -113,22 +113,19 @@ function RestaurantFilterBar(props) {
 
   return (
     <div>
-      <AppBar position="static" color="default">
-        <Tabs
-          value={value !== undefined ? value : false}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="scrollable"
-          scrollButtons="auto"
-          aria-label="scrollable auto tabs example"
-        >
-          {props.getMyRestaurants.map((element) => {
-            return <Tab label={element.category} {...a11yProps(element.id)} />
-          })}
-        </Tabs>
-      </AppBar>
-
+      <Tabs
+        value={value !== undefined ? value : false}
+        onChange={handleChange}
+        indicatorColor="primary"
+        textColor="primary"
+        variant="scrollable"
+        scrollButtons="auto"
+        aria-label="scrollable auto tabs example"
+      >
+        {props.getMyRestaurants.map((element) => {
+          return <Tab label={element.category} {...a11yProps(element.id)} />
+        })}
+      </Tabs>
       {restaurantMap(
         showRestaurants.length === 0 ? props.getMyRestaurants : showRestaurants,
         props
