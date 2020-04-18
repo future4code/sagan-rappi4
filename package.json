@@ -24,7 +24,8 @@
     "styled-components": "4.4.1"
   },
   "devDependencies": {
-    "enzyme-adapter-react-16": "^1.15.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "typescript": "3.3.3"
   },
   "scripts": {

@@ -31,7 +31,6 @@ const Bttn = styled.button`
 `
 
 const Container = styled.div`
-    /* padding-top: 10px; */
     margin: 5px; 
     max-width: 345px;
     padding-bottom: 8px;
@@ -44,10 +43,8 @@ const ContainerButton = styled.div`
 
 const ContainerQuantityProductsInCar = styled.div`
     display: flex; 
-/*     align-items: center;
-    align-items:center; */
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     border: solid 1px;
     color: #e86e5a;
 `
@@ -55,6 +52,19 @@ const ContainerQuantityProductsInCar = styled.div`
 const ContainerCart = styled.div`
     display: flex;
     justify-content: flex-end;
+`
+
+const NomeDoItem = styled.span`
+    width: 166px;
+    height: 16px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -0.39px;
+    color: #e86e5a;
 `
 
 export default function CardProduct(props) {
@@ -76,10 +86,10 @@ export default function CardProduct(props) {
                             <ContainerCart>
                             { props.isForRender(props.product) ? <ContainerQuantityProductsInCar> {props.quantityByProductInCar(props.product)} </ContainerQuantityProductsInCar> : ''}
                             </ContainerCart>
-                            <Typography gutterBottom variant="subtitle1" component="h2" color="primary">
+                            <NomeDoItem>
                                 {props.product.name}
-                            </Typography>
-                            <Typography color="secondary" variant="subtitle2">
+                            </NomeDoItem>
+                            <Typography color="secondary" variant="subtitle3">
                                 {props.product.description}
                             </Typography>
                             <Typography>

@@ -29,14 +29,13 @@ const Wrapper = styled.div`
 `
 
 const SelectStyle = styled.select`
-    width: 280px;
+    width: 240px;
     height: 30px;
     border-radius: 4px;
     border: solid 1px #b8b8b8;
 `
 
 const ButtonAddCart = styled.button`
-    /* width: 183px; */
     height: 30px;
     font-family: Roboto;
     font-size: 14px;
@@ -55,12 +54,6 @@ const ButtonAddCart = styled.button`
 const H3Styled = styled.h3`
     margin: 0;
 `
-
-/* const DialogStyle = styled.dialog`
-    width: 328px;
-    height: 216px;
-    background-color: var(--white);
-` */
 
 class RestaurantPage extends Component {
     constructor() {
@@ -81,10 +74,12 @@ class RestaurantPage extends Component {
            this.props.redirectLogin() 
         }
         
-        // depois lembrar de checar se tem id
-        if (token && this.props.getRestaurantDetail) {
+        if (token && this.props.getRestaurantDetail && this.props.idRestaurant) {
             this.props.getRestaurantDetail(this.props.idRestaurant)
-            //Usando o restaurante 1 para funcionar, quando integrar trocar por this.props.restauraurant.id
+        }
+
+        if (!this.props.idRestaurant) {
+            this.props.redirectFeed()
         }
     }
 

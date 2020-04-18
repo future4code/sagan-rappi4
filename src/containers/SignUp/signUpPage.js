@@ -15,9 +15,6 @@ import { routes } from '../Router';
 
 const Wrapper = styled.div`
   margin: 0; 
-   /* 20px auto; 
-  width: 400px;
-  max-width: 95vw; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,7 +25,6 @@ const Wrapper = styled.div`
 `
 const Logo = styled.img`
   margin: 3vh 0 1vh;
-  /* 7vh 0 3vh; */
 `
 const Form = styled.form`
   width: 95%;
@@ -107,12 +103,23 @@ class SignUp extends Component {
 
     handleOnSubmit = (event) => {
         event.preventDefault()
-        this.props.signUp(this.state.form)
+
+        if (this.validPassword()) {
+            this.props.signUp(this.state.form)
+        }
     }
 
-/*     handleClickShowPassword = () => {
-        setValues({ ...values, showPassword: !values.showPassword });
-    }; */
+    validPassword = () => {
+        if (this.state.form.password !== this.state.form.confirmPassword) {
+            alert('Senhas diferentes!')
+
+            return false
+        }
+
+        return true
+    }
+
+   
 
     render() {
         return (
