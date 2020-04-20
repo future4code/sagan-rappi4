@@ -6,12 +6,13 @@ import { setCurrentPage, setShowMenu } from "../../actions/menuAction"
 import TopBar from '../../Components/TopBar'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlgwVGV0S0tkeVRoOW4zSFR6TENrIiwibmFtZSI6IkFuZHJpdXMiLCJlbWFpbCI6ImFuZHJpdXMucm9jaGFsYXphcmlub0BnbWFpbC5jb20iLCJjcGYiOiIxMTEuMTIxLjExMS0xMSIsImhhc0FkZHJlc3MiOnRydWUsImFkZHJlc3MiOiJBdi4gRHVxdWUgZGUgY2F4aWFzLCAxNzcsIDcxIC0gVmlsYSBOLiBDb25jZWnDp8OjbyIsImlhdCI6MTU4Njg2NjU2N30.erQsTxDL6Q6vDx8zGA1fIONJQVqNkLg-Qlz9VBfn4oM"
+// const token = window.localStorage.getItem('token')
 
 const WrapperProfile = styled.div`
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+    font-size: 16px;
 `
 
 const WrapperAddress = styled.div`
@@ -19,6 +20,7 @@ const WrapperAddress = styled.div`
     width: 100%;
     padding-top: 3px;
     padding-bottom: 3px;
+    font-size: 16px;
     p{
         width: 90%;
         margin-left: auto;
@@ -31,12 +33,41 @@ const ItemOrder = styled.div`
     margin-bottom: 3px;
     margin-left: auto;
     margin-right: auto;
+    padding-left: 5%;
     border: 1px solid #b8b8b8;
     border-radius: 8px;
+    & :nth-child(1){
+        font-size: 16px;
+        color: #e86e5a;
+    };
+    & :nth-child(2){
+        font-size: 12px;
+    };
+    & :nth-child(3){
+        font-size: 16px;
+        font-weight: bold;
+        font-stretch: normal;
+    };
 `
 
 const WrapperOrders = styled.div`
     margin-bottom: 63px;
+    & h3{
+        margin-bottom: 3px;
+        margin-left: 5%;
+        font-size: 16px;
+     font-weight: normal;
+     font-stretch: normal;
+     font-style: normal;
+     line-height: normal;
+    }
+`
+const LineH = styled.div`
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 6px;
+    border-top: 1px solid black;
 `
 
 class profilePage extends React.Component {
@@ -50,6 +81,8 @@ class profilePage extends React.Component {
     }
 
     componentDidMount() {
+        const token = window.localStorage.getItem('token')
+        console.log(token)
         this.props.getProfile(token)
         this.props.getOrdersHistory(token)
         this.props.setCurrentPage("profile")
@@ -74,28 +107,26 @@ class profilePage extends React.Component {
     }
 
     showOrdersHistory = () => {
-
+        console.log(this.props.orders.lenght)
         return (
             <WrapperOrders>
+                <h3>Histórico de pedidos</h3>
+                <LineH />
                 {this.props.orders.map(order => {
                     var date = new Date(order.createdAt)
-                    return (<ItemOrder key={order.createdAt}> <p>{order.restaurantName}</p> <p> {date.toString()} </p> <p>SUBTOTAL R${order.totalPrice} </p></ItemOrder>)
+                    return (<ItemOrder key={order.createdAt}> <p>{order.restaurantName}</p> <p> {date.toString()} </p> <p>SUBTOTAL R${order.totalPrice.toFixed(2)} </p></ItemOrder>)
                 })}
             </WrapperOrders>
         )
     }
 
     render() {
-        // console.log(this.props.profile)
-
         const topBar = (
             <TopBar
                 title={this.state.showTopBarTitle}
                 returnButton={this.state.showBackButton ? <ArrowBackIosIcon onClick={this.renderFeedPage} fontSize='small' /> : ''}
             />
         )
-
-        console.log(this.props.orders)
         return (
             <div>
                 {this.state.showTopBar ? topBar : ""}

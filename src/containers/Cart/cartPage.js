@@ -13,8 +13,7 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import { setCart } from '../../actions/detailRestaurant';
 
-//COLOCAR TOKEN DO LOCALSTORAGE GERADO PELO LOGIN
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlgwVGV0S0tkeVRoOW4zSFR6TENrIiwibmFtZSI6IkFuZHJpdXMiLCJlbWFpbCI6ImFuZHJpdXMucm9jaGFsYXphcmlub0BnbWFpbC5jb20iLCJjcGYiOiIxMTEuMTIxLjExMS0xMSIsImhhc0FkZHJlc3MiOnRydWUsImFkZHJlc3MiOiJBdi4gRHVxdWUgZGUgY2F4aWFzLCAxNzcsIDcxIC0gVmlsYSBOLiBDb25jZWnDp8OjbyIsImlhdCI6MTU4Njg2NjU2N30.erQsTxDL6Q6vDx8zGA1fIONJQVqNkLg-Qlz9VBfn4oM"
+const token = window.localStorage.getItem('token') 
 
 const Wrapper = styled.div`
     margin-bottom: 72px;
@@ -229,7 +228,6 @@ class cartPage extends React.Component {
     }
 
     showRestaurant = () => {
-        // console.log(this.props.cart.restaurant)
         const { name, address, deliveryTime } = this.props.cart.restaurant
         return (
             <div>

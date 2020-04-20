@@ -12,13 +12,9 @@ import SearchPage from './searchPage'
 import styled from 'styled-components'
 import {getOrderProgress} from "../../actions/menuAction"
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlgwVGV0S0tkeVRoOW4zSFR6TENrIiwibmFtZSI6IkFuZHJpdXMiLCJlbWFpbCI6ImFuZHJpdXMucm9jaGFsYXphcmlub0BnbWFpbC5jb20iLCJjcGYiOiIxMTEuMTIxLjExMS0xMSIsImhhc0FkZHJlc3MiOnRydWUsImFkZHJlc3MiOiJBdi4gRHVxdWUgZGUgY2F4aWFzLCAxNzcsIDcxIC0gVmlsYSBOLiBDb25jZWnDp8OjbyIsImlhdCI6MTU4Njg2NjU2N30.erQsTxDL6Q6vDx8zGA1fIONJQVqNkLg-Qlz9VBfn4oM"
-
-
 const GlobalWrapper = styled.div`
   margin: 0;
   padding: 0;
-  margin-top: 9px;
   background-color: #ffffff;
   height: 100vh;
 `
@@ -47,6 +43,7 @@ class feedPage extends Component {
   }
 
   componentDidMount() {
+    const token = window.localStorage.getItem('token')
     this.props.getPosts()
     this.props.setCurrentPage("feed")
     this.props.setShowMenu(true)
@@ -104,10 +101,10 @@ class feedPage extends Component {
   render() {
     const topBar = (
       <TopBar
-        title={this.state.showTopBarTitle}
-        returnButton={this.state.showBackButton ? <ArrowBackIosIcon onClick={this.renderFeedPage} fontSize='small' /> : ''}
+          title={this.state.showTopBarTitle}
+          returnButton={this.state.showBackButton ? <ArrowBackIosIcon onClick={this.renderFeedPage} fontSize='small' /> : ''}
       />
-    )
+  )
     const textField = (
       <TextField
         variant="outlined"

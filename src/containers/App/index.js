@@ -17,8 +17,11 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { generateReducers } from "../../reducers";
 import { routerMiddleware } from "connected-react-router";
 import BottomNavigationBar from '../../Components/BottomNavigation'
-import { connect } from "react-redux"
+import styled from "styled-components"
 
+const Wrapper = styled.div`
+  font-family: 'Roboto', sans-serif;
+`
 
 const generateClassName = createGenerateClassName();
 const jss = create({
@@ -39,15 +42,17 @@ const middlewares = [
 const store = createStore(generateReducers(history), compose(...middlewares));
 
 export const App = () => (
-  <Provider store={store}>
-    <JssProvider jss={jss} generateClassName={generateClassName}>
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router history={history} />
-        <BottomNavigationBar />
-      </MuiThemeProvider>
-    </JssProvider>
-  </Provider>
+  <Wrapper>
+    <Provider store={store}>
+      <JssProvider jss={jss} generateClassName={generateClassName}>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline />
+          <Router history={history} />
+          <BottomNavigationBar />
+        </MuiThemeProvider>
+      </JssProvider>
+    </Provider>
+  </Wrapper>
 );
 
 
