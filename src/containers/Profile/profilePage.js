@@ -6,8 +6,6 @@ import { setCurrentPage, setShowMenu } from "../../actions/menuAction"
 import TopBar from '../../Components/TopBar'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
-// const token = window.localStorage.getItem('token')
-
 const WrapperProfile = styled.div`
     width: 90%;
     margin-left: auto;
@@ -21,11 +19,15 @@ const WrapperAddress = styled.div`
     padding-top: 3px;
     padding-bottom: 3px;
     font-size: 16px;
-    p{
+    & p{
         width: 90%;
         margin-left: auto;
         margin-right: auto;
+    };
+    & :nth-child(1){
+        color: #b8b8b8;
     }
+
 `
 const ItemOrder = styled.div`
     width: 90%;
@@ -42,6 +44,7 @@ const ItemOrder = styled.div`
     };
     & :nth-child(2){
         font-size: 12px;
+        letter-spacing: -0.29px;
     };
     & :nth-child(3){
         font-size: 16px;
@@ -82,7 +85,6 @@ class profilePage extends React.Component {
 
     componentDidMount() {
         const token = window.localStorage.getItem('token')
-        console.log(token)
         this.props.getProfile(token)
         this.props.getOrdersHistory(token)
         this.props.setCurrentPage("profile")
@@ -107,7 +109,6 @@ class profilePage extends React.Component {
     }
 
     showOrdersHistory = () => {
-        console.log(this.props.orders.lenght)
         return (
             <WrapperOrders>
                 <h3>Histórico de pedidos</h3>
