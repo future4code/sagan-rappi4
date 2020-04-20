@@ -9,7 +9,6 @@ const TopBarWrapper = styled.div`
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid #d3d3d4 ;
-  margin-bottom: 5px;
 `
 const ReturnButton = styled.div`
     padding: 0;

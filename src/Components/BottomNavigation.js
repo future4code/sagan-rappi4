@@ -8,6 +8,7 @@ import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
 import { connect } from "react-redux";
 import { routes } from '../containers/Router/index';
 import { push } from "connected-react-router";
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import currentPage from "../actions/feedPageAction"
 
 const BottomNavigationWrapper = styled.div`
@@ -18,27 +19,57 @@ const BottomNavigationWrapper = styled.div`
   padding: 0;
   border-top: 2px solid #d3d3d4 ;
 `
+const Progress = styled.div`
+  position: absolute;
+  margin-top: -118px;
+  height: 118px;
+  width: 100%;
+  background-color: #e86e5a;
+  display: flex;
+`
+const Time = styled(AccessTimeIcon)`
+  color: white;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 16px;
+  margin-right: 16px;
+  font-size: 32px;
+`
+
+function showOrderProgress(orderProgress) {
+  return (
+    <Progress>
+      <Time />
+      <div>
+        <p>Pedido em andamento</p>
+        <p>{orderProgress.restaurantName}</p>
+        <p>SUBTOTAL R${orderProgress.totalPrice.toFixed(2)}</p>
+      </div>
+    </Progress>
+  )
+}
 
 function BottomNavigationBar(props) {
-  console.log(props.currentPage)
   const [value, setValue] = React.useState(props.currentPage);
-
-  if (props.showMenu !== false){
+  if (props.showMenu !== false) {
     return (
-      <BottomNavigationWrapper>
-        <BottomNavigation
-          value={props.currentPage}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-        >
-          <BottomNavigationAction value="feed" onClick={() => { props.goToFeed() }} icon={<HomeOutlinedIcon />} />
-          <BottomNavigationAction value="cart" onClick={() => { props.goToCart() }} icon={<ShoppingCartOutlinedIcon />} />
-          <BottomNavigationAction value="profile" onClick={() => { props.goToProfile() }} icon={<PermIdentityOutlinedIcon />} />
-        </BottomNavigation>
-      </BottomNavigationWrapper>
+      <div>
+        <BottomNavigationWrapper>
+          {props.orderProgress === null ? false : showOrderProgress(props.orderProgress)}
+          <BottomNavigation
+            value={props.currentPage}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          >
+            <BottomNavigationAction value="feed" onClick={() => { props.goToFeed() }} icon={<HomeOutlinedIcon />} />
+            <BottomNavigationAction value="cart" onClick={() => { props.goToCart() }} icon={<ShoppingCartOutlinedIcon />} />
+            <BottomNavigationAction value="profile" onClick={() => { props.goToProfile() }} icon={<PermIdentityOutlinedIcon />} />
+          </BottomNavigation>
+        </BottomNavigationWrapper>
+      </div>
     )
-  }else{
+  } else {
     return false
   }
 }
@@ -46,7 +77,8 @@ function BottomNavigationBar(props) {
 const mapStateToProps = state => {
   return {
     currentPage: state.menu.currentPage,
-    showMenu: state.menu.showMenu
+    showMenu: state.menu.showMenu,
+    orderProgress: state.menu.orderProgress
   }
 }
 

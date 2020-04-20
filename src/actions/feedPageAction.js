@@ -14,6 +14,7 @@ export const showRestaurantsList = (restaurants) => {
     }
   }
 }
+
 export const sendID = (idRestaurant) => {
   console.log(idRestaurant)
   return {
@@ -23,8 +24,6 @@ export const sendID = (idRestaurant) => {
     }
   }
 }
-
-
 
 export const getRestaurantsList = () => async (dispatch) => {
   const token = window.localStorage.getItem('token')
@@ -37,14 +36,12 @@ export const getRestaurantsList = () => async (dispatch) => {
         }
       }
     )
-    console.log(result.data.restaurants)
     dispatch(showRestaurantsList(result.data.restaurants))
-    // dispatch(push(routes.feedPage))
-
   } catch (error) {
     console.log(error)
   }
 }
+
 export const showRestaurantDetail = (restaurantId) => async (dispatch) => {
   const token = window.localStorage.getItem('token')
 
@@ -61,7 +58,6 @@ export const showRestaurantDetail = (restaurantId) => async (dispatch) => {
     console.log(result.data.restaurant.products)
     dispatch(sendID(restaurantId))
     dispatch(push(routes.restaurantPage))
-    
   } catch (error) {
     console.log(restaurantId)
     console.log(error)

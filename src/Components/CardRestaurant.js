@@ -14,13 +14,17 @@ const useStyles = makeStyles({
       maxWidth: 345
     }
 }); 
+
+const Wrapper = styled(Card)`
+    margin-top: 12px;
+`
   
 
 export default function CardRestaurant(props) {
     const classes = useStyles();
   
     return (
-        <Card className={classes.root}>
+        <Wrapper className={classes.root}>
             <CardActionArea>
                 <CardMedia
                     component="img"
@@ -47,6 +51,6 @@ export default function CardRestaurant(props) {
                     </Typography>
                 </CardContent>
             </CardActionArea>
-        </Card>
+        </Wrapper>
     );
 }

@@ -11,10 +11,14 @@ import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import { setCart } from '../../actions/detailRestaurant';
 
 //COLOCAR TOKEN DO LOCALSTORAGE GERADO PELO LOGIN
 const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlgwVGV0S0tkeVRoOW4zSFR6TENrIiwibmFtZSI6IkFuZHJpdXMiLCJlbWFpbCI6ImFuZHJpdXMucm9jaGFsYXphcmlub0BnbWFpbC5jb20iLCJjcGYiOiIxMTEuMTIxLjExMS0xMSIsImhhc0FkZHJlc3MiOnRydWUsImFkZHJlc3MiOiJBdi4gRHVxdWUgZGUgY2F4aWFzLCAxNzcsIDcxIC0gVmlsYSBOLiBDb25jZWnDp8OjbyIsImlhdCI6MTU4Njg2NjU2N30.erQsTxDL6Q6vDx8zGA1fIONJQVqNkLg-Qlz9VBfn4oM"
 
+const Wrapper = styled.div`
+    margin-bottom: 72px;
+`
 const ItemCart = styled.div`
     border: 1px solid #b8b8b8;
     border-radius: 8px;
@@ -22,6 +26,7 @@ const ItemCart = styled.div`
     height: 112px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 9px;
     display: flex;
 `
 const PhotoProduct = styled.img`
@@ -36,6 +41,10 @@ const FormPayment = styled.form`
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+    p{
+        font-size: 16px;
+        margin-bottom: 6px;
+    }
 `
 const WrapperAddress = styled.div`
     display:flex;
@@ -61,20 +70,88 @@ const CartWrapper = styled.div`
 const Quantity = styled.div`
     width: 33px;
     height: 33px;
-    border-bottom: 1px solid red;
-    border-left: 1px solid red;
+    border: 1px solid red;
     border-bottom-left-radius: 8px;
-    margin-right:0;
+    border-top-right-radius: 8px;
+    margin-right: 0;
+    display: flex;
+    color: red;
+    & p{
+        margin: auto;
+    }
 `
-
 const ItemDescription = styled.div`
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 16px;
+    & :nth-child(2){
+        color: red;
+        margin: 0;
+        margin-top: -13px;
+        display: flex;
+        justify-content: left;
+    };
+    & :nth-child(3){
+        color: #b8b8b8;
+        font-size: 14px;
+        margin: 0;
+        margin-top: 6px;
+        font-size: 14px;
+        width: 198px;
+    height: 30px;
+        display: flex;
+        justify-content: left;
+    };
+    & :nth-child(4){
+        font-size: 16px;
+        width: 108px;
+        height: 19px;
+        margin: 0;
+    };
+
+`
+const ButtonRemove = styled.div`
+    color: red;
+    margin: 0;
+    width: 90px;
+    height: 31px;
+    border-radius: 8px;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border: solid 1px red;
+    display: flex;
+    align-self: flex-end;
+    & p{
+        margin: auto;
+    };
 `
 const QuatityAlign = styled.div`
     width: 100%;
     display:flex;
     align-items: right;
     justify-content: flex-end;
+`
+const WrapperPrice = styled.div`
+    display:flex;
+    flex-direction: column;
+    margin: 5%;
+    margin-bottom: 0;
+    & :nth-child(1){
+        display: flex;
+        justify-content: flex-end;
+    };
+    & :nth-child(2){
+        display:flex;
+        justify-content: space-between;
+        & :nth-child(2){
+            color:red;
+        }
+    };
+`
+const LineH = styled.div`
+    width: 100%;
+    border-top: 1px solid black;
 `
 
 class cartPage extends React.Component {
@@ -129,11 +206,14 @@ class cartPage extends React.Component {
                             <PhotoProduct src={prod.product.photoUrl} />
                             <ItemDescription>
                                 <QuatityAlign>
-                                    <Quantity>{prod.quantity}</Quantity>
+                                    <Quantity><p>{prod.quantity}</p></Quantity>
                                 </QuatityAlign>
                                 <p>{prod.product.name}</p>
                                 <p>{prod.product.description}</p>
-                                <p>{prod.product.price}</p>
+                                <div>R${prod.product.price.toFixed(2)}</div>
+                                <ButtonRemove onClick={()=>{this.removeProductInCart(prod.product.id)}}>
+                                    <p>remover</p>
+                                </ButtonRemove>
                             </ItemDescription>
                         </ItemCart>
                     )
@@ -149,7 +229,7 @@ class cartPage extends React.Component {
     }
 
     showRestaurant = () => {
-        console.log(this.props.cart.restaurant)
+        // console.log(this.props.cart.restaurant)
         const { name, address, deliveryTime } = this.props.cart.restaurant
         return (
             <div>
@@ -161,22 +241,38 @@ class cartPage extends React.Component {
     }
 
     showPrice = () => {
+        let totalPrice = 0
+        const shipping = this.props.cart.restaurant !== undefined ? this.props.cart.restaurant.shipping : 0
         if (this.props.cart.orders !== undefined) {
             for (const order of this.props.cart.orders) {
                 console.log(order.quantity)
+                totalPrice = totalPrice + (order.quantity * order.product.price)
             }
         }
-
         return (
-            <div>
-                <p>Frete R$0,00</p>
-                <p>SUBTOTAL R$00,00</p>
-            </div>
+            <WrapperPrice>
+                <p>Frete R${shipping.toFixed(2)}</p>
+                <div> <p>SUBTOTAL</p> <p> R${(totalPrice+shipping).toFixed(2)} </p> </div>
+            </WrapperPrice>
         )
     }
 
+    removeProductInCart = (idProduct) => {
+        const newCart = this.props.cart.orders.filter(order=>{
+            return ( order.product.id !== idProduct )
+        })
+        let cart = {
+            restaurant: this.props.cart.restaurant,
+            orders: newCart
+        }
+        if (cart.orders.length===0){
+            cart = {}
+        }
+        this.props.setCart(cart)
+    }
+
     render() {
-        console.log(this.props.cart)
+        // console.log(this.props.cart)
         const topBar = (
             <TopBar
                 title={this.state.showTopBarTitle}
@@ -184,7 +280,7 @@ class cartPage extends React.Component {
             />
         )
         return (
-            <div>
+            <Wrapper>
                 {this.state.showTopBar ? topBar : ""}
                 <WrapperAddress>
                     <p>Endereço de entrega</p>
@@ -205,18 +301,14 @@ class cartPage extends React.Component {
                 </div>
                 <FormPayment onSubmit={this.handleConfirmOrder}>
                     <p>Forma de pagamento</p>
+                    <LineH />
                     <RadioGroup aria-label="Gender" name="pagamento">
                         <FormControlLabel type="radio" name="pagamento" required={true} value="money" onClick={() => { this.handlePaymentChange("money") }} control={<Radio />} label="Dinheiro" />
                         <FormControlLabel type="radio" name="pagamento" required={true} value="creditcard" onClick={() => { this.handlePaymentChange("creditcard") }} control={<Radio />} label="Cartão de crédito" />
-
-
                     </RadioGroup>
-
-                    {/* <p><input type="radio" name="pagamento" required={true} value="money" onClick={() => { this.handlePaymentChange("money") }} />Dinheiro</p>
-                    <p><input type="radio" name="pagamento" required={true} value="creditcard" onClick={() => { this.handlePaymentChange("creditcard") }} />Cartão de crédito</p> */}
                     <Button type="submit" variant="contained" color="primary" disabled={this.state.payment !== undefined ? false : true} >Confirmar</Button>
                 </FormPayment>
-            </div>
+            </Wrapper>
         )
     }
 }
@@ -232,7 +324,8 @@ const mapDispatchToProps = dispatch => ({
     getAddress: (token, restaurantId, products, paymentMethod) => dispatch(getAddress(token, restaurantId, products, paymentMethod)),
     placeOrder: (token, restaurantId, products, paymentMethod) => dispatch(placeOrder(token, restaurantId, products, paymentMethod)),
     setCurrentPage: (currentPage) => dispatch(setCurrentPage(currentPage)),
-    setShowMenu: (show) => dispatch(setShowMenu(show))
+    setShowMenu: (show) => dispatch(setShowMenu(show)),
+    setCart: (cart) => dispatch(setCart(cart))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(cartPage);
