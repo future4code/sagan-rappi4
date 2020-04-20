@@ -10,6 +10,7 @@ import RestaurantFilterBar from '../../Components/RestaurantFilterBar'
 import TopBar from '../../Components/TopBar'
 import SearchPage from './searchPage'
 import styled from 'styled-components'
+import {getOrderProgress} from "../../actions/menuAction"
 
 const GlobalWrapper = styled.div`
   margin: 0;
@@ -22,6 +23,7 @@ const BodyWrapper = styled.div`
   flex-direction: column;
   width: 100vw;
   padding: 0 5vw;
+  margin-top: 9px;
 `
 const BottomDiv = styled.div`
   height: 10vh;
@@ -41,9 +43,11 @@ class feedPage extends Component {
   }
 
   componentDidMount() {
+    const token = window.localStorage.getItem('token')
     this.props.getPosts()
     this.props.setCurrentPage("feed")
     this.props.setShowMenu(true)
+    this.props.getOrderProgress(token)
   }
   renderFeedPage = () => {
     this.setState({
@@ -97,10 +101,10 @@ class feedPage extends Component {
   render() {
     const topBar = (
       <TopBar
-        title={this.state.showTopBarTitle}
-        returnButton={this.state.showBackButton ? <ArrowBackIosIcon onClick={this.renderFeedPage} fontSize='small' /> : ''}
+          title={this.state.showTopBarTitle}
+          returnButton={this.state.showBackButton ? <ArrowBackIosIcon onClick={this.renderFeedPage} fontSize='small' /> : ''}
       />
-    )
+  )
     const textField = (
       <TextField
         variant="outlined"
@@ -141,7 +145,8 @@ function mapDispatchToProps(dispatch) {
   return {
     getPosts: () => dispatch(getRestaurantsList()),
     setCurrentPage: (currentPage) => dispatch(setCurrentPage(currentPage)),
-    setShowMenu: (show) => dispatch(setShowMenu(show))
+    setShowMenu: (show) => dispatch(setShowMenu(show)),
+    getOrderProgress: (token) => dispatch(getOrderProgress(token))
   };
 }
 function mapStateToProps(state) {

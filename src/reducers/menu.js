@@ -1,6 +1,7 @@
 const initialState = {
     currentPage : "feed",
-    showMenu: false
+    showMenu: false,
+    orderProgress: null
 }
 
 const menu = (state=initialState, action) =>{
@@ -15,6 +16,13 @@ const menu = (state=initialState, action) =>{
             return {
                 ...state,
                 showMenu: action.payload.show
+            }
+        }
+        case "SET_ORDER_PROGRESS": {
+            console.log(action.payload.orderProgress)
+            return {
+                ...state,
+                orderProgress: action.payload.orderProgress
             }
         }
         default: {

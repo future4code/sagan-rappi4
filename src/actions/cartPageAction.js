@@ -46,7 +46,7 @@ export const placeOrder = (token, restaurantId, products, paymentMethod) => asyn
     }
     try {
         const response = await axios.post(`${baseUrl}restaurants/${restaurantId}/order`, placeOrderData, { headers: { auth: token } })
-        alert("Pedido Concluido, aguarde a entrega!")
+        dispatch(push(routes.root))
     }
     catch (error) {
         console.error(error)

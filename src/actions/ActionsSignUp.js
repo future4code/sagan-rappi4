@@ -16,16 +16,21 @@ const setAddAddressAction = (userAddress) => {
 
 export const createAddress = (userAddress) => async (dispatch) => {
     
-    const token = window.localStorage.getItem('token')
     console.log(userAddress)
     try {
-        const result = await axios.put(`${baseURL}/address`, userAddress,
+        const response = await axios.put(`${baseURL}/address`, userAddress,
         {
-            headers: { auth: token }}
+            headers: { auth: window.localStorage.getItem('token') }
+        }
         )
-        const { user, token } = result.data
-        dispatch(loginUser(user, token));
-        dispatch(setAddAddressAction(result.data.userAddress))
+        const { user, token } = response.data
+        console.log(user)
+        console.log(token)
+
+        window.localStorage.setItem('token', response.data.token)
+        // dispatch(loginUser(user, token));
+
+        // dispatch(setAddAddressAction(result.data.userAddress))
         dispatch(push(routes.feedPage))
     }
     catch(error){
