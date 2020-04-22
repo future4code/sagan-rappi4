@@ -46,7 +46,7 @@ const form = [
         name: "name",
         type: "text",
         label: "Nome",
-        placeholder: "Nome e sobrenome",
+        placeholder: "Nome",
         pattern: "^[a-z-A-Z\\s]{3,}$",
         required: true,
     },
@@ -54,7 +54,7 @@ const form = [
         name: "email",
         type: "email",
         label: "E-mail",
-        placeholder: "email@email.com",
+        placeholder: "Email",
         required: true,
     },
     {
@@ -67,12 +67,24 @@ const form = [
     }
 ]
 
+
 class EditUser extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            form: {}
+            form: {},
+            name: "",
+            cpf: "",
+            email: ""
         }
+    }
+
+    componentDidMount() {
+        const token = window.localStorage.getItem('token')
+        const localData = JSON.parse(window.localStorage.getItem('rappi4_data')) || {}
+        this.setState({ name: localData.user.name })
+        this.setState({ cpf: localData.user.cpf })
+        this.setState({ email: localData.user.email })
     }
 
     handleOnChangeForm = (event) => {
@@ -98,7 +110,7 @@ class EditUser extends Component {
                 /> 
                 <Logo src={LogoInv} />
                 <Form onSubmit={this.handleOnSubmit}>
-                    <Title variant="subtitle1"> Cadastrar </Title>
+                    <Title variant="subtitle1"> Editar </Title>
                         {form.map(input => (
                             <Container key={input.name}>
                                 <TextField
@@ -106,7 +118,7 @@ class EditUser extends Component {
                                     required={input.required}
                                     type={input.type}
                                     name={input.name}
-                                    placeholder={input.placeholder}
+                                    placeholder={this.state[input.name]}
                                     onChange={this.handleOnChangeForm}
                                     fullWidth={true}
                                     variant="outlined"
@@ -124,9 +136,13 @@ class EditUser extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    signUp: state.signUp,
+    
+  });
+
 const mapDispatchToProps = dispatch => ({
-    requestEditUser: (formData) => dispatch(requestEditUser(formData)),
-    redirectToProfile: () => dispatch(push(routes.profilePage))
+    requestEditUser: (formData) => dispatch(requestEditUser(formData)),    
 })
 
-export default connect(null, mapDispatchToProps)(EditUser)
+export default connect(mapStateToProps, mapDispatchToProps)(EditUser)

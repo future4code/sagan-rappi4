@@ -7,18 +7,17 @@ const baseUrl = 'https://us-central1-missao-newton.cloudfunctions.net/rappi4'
 export const requestEditUser = (formData) => async (dispatch) => {
     
     const data = {
-        name: formData.name,
-        cpf: formData.cpf,
-        email: formData.email
+        "name": formData.name,
+        "cpf": formData.cpf,
+        "email": formData.email
     }
 
     try {
         const response = await axios.put(`${baseUrl}/profile`, data, 
         {
             headers: { auth:localStorage.getItem(`token`) }
-        })
-        console.log(response)
-        dispatch(editUser(response))
+        }) 
+        dispatch(editUser(result))
         dispatch(push(routes.profilePage))
     }
     catch (error){
