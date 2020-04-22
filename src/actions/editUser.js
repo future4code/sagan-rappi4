@@ -13,7 +13,7 @@ export const requestEditUser = (formData) => async (dispatch) => {
     }
 
     try {
-        const result = await axios.put(`${baseUrl}/profile`, data, 
+        const response = await axios.put(`${baseUrl}/profile`, data, 
         {
             headers: { auth:localStorage.getItem(`token`) }
         }) 

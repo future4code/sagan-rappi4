@@ -10,10 +10,11 @@ import { push } from "connected-react-router";
 import { routes } from '../Router';
 
 
+// verificar senha e confirm senha
+// colocar o olhinho pra mostrar a senha
+
 const Wrapper = styled.div`
-  margin: 20px auto;
-  width: 400px;
-  max-width: 95vw;
+  margin: 0; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,7 +24,7 @@ const Wrapper = styled.div`
   }
 `
 const Logo = styled.img`
-  margin: 7vh 0 3vh;
+  margin: 3vh 0 1vh;
 `
 const Form = styled.form`
   width: 95%;
@@ -33,7 +34,7 @@ const Title = styled(Typography)`
   text-align: center;
 `
 const Container = styled.div`
-  margin: 5vh 0;
+  margin: 4vh 0;
 `
 const Btn = styled(Button)`
   color: black;
@@ -102,8 +103,23 @@ class SignUp extends Component {
 
     handleOnSubmit = (event) => {
         event.preventDefault()
-        this.props.signUp(this.state.form)
+
+        if (this.validPassword()) {
+            this.props.signUp(this.state.form)
+        }
     }
+
+    validPassword = () => {
+        if (this.state.form.password !== this.state.form.confirmPassword) {
+            alert('Senhas diferentes!')
+
+            return false
+        }
+
+        return true
+    }
+
+   
 
     render() {
         return (

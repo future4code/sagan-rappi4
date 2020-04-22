@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { TextField } from '@material-ui/core'
 import { getRestaurantsList } from '../../actions/feedPageAction'
-import TopBar from '../../Components/TopBar'
-import RestaurantFilterBar from '../../Components/RestaurantFilterBar'
-import styled from 'styled-components'
+import { setCurrentPage, setShowMenu } from "../../actions/menuAction"
+import { TextField } from '@material-ui/core'
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import SearchIcon from '@material-ui/icons/Search';
-import { setCurrentPage, setShowMenu } from "../../actions/menuAction"
+import RestaurantFilterBar from '../../Components/RestaurantFilterBar'
+import TopBar from '../../Components/TopBar'
 import SearchPage from './searchPage'
+import styled from 'styled-components'
+import {getOrderProgress} from "../../actions/menuAction"
 
 const GlobalWrapper = styled.div`
   margin: 0;
@@ -22,6 +23,7 @@ const BodyWrapper = styled.div`
   flex-direction: column;
   width: 100vw;
   padding: 0 5vw;
+  margin-top: 9px;
 `
 const BottomDiv = styled.div`
   height: 10vh;
@@ -34,7 +36,6 @@ class feedPage extends Component {
       showTopBar: true,
       showTextField: true,
       showFilterBar: true,
-      showBottomNavigation: true,
       showTopBarTitle: 'Rappi4',
       showSearchPage: {},
       showBackButton: false
@@ -42,27 +43,28 @@ class feedPage extends Component {
   }
 
   componentDidMount() {
+    const token = window.localStorage.getItem('token')
     this.props.getPosts()
     this.props.setCurrentPage("feed")
     this.props.setShowMenu(true)
+    this.props.getOrderProgress(token)
   }
   renderFeedPage = () => {
     this.setState({
       showTopBar: true,
       showTextField: true,
       showFilterBar: true,
-      showBottomNavigation: true,
       showTopBarTitle: 'Rappi4',
       showSearchPage: {},
       showBackButton: false
     })
+    this.props.setShowMenu(true)
   }
   renderCartPage = () => {
     this.setState({
       showTopBar: true,
       showTextField: false,
       showFilterBar: false,
-      showBottomNavigation: true,
       showTopBarTitle: 'Meu carrinho',
       showSearchPage: {},
       showBackButton: false
@@ -73,7 +75,6 @@ class feedPage extends Component {
       showTopBar: true,
       showTextField: false,
       showFilterBar: false,
-      showBottomNavigation: true,
       showTopBarTitle: 'Meu perfil',
       showSearchPage: {},
       showBackButton: false
@@ -84,11 +85,11 @@ class feedPage extends Component {
       showTopBar: true,
       showTextField: true,
       showFilterBar: false,
-      showBottomNavigation: true,
       showTopBarTitle: 'Busca',
       showSearchPage: { show: true, search: event ? event.target.value : '' },
       showBackButton: true
     })
+    this.props.setShowMenu(false)
   }
   renderBackButton = () => {
     this.setState({
@@ -100,10 +101,10 @@ class feedPage extends Component {
   render() {
     const topBar = (
       <TopBar
-        title={this.state.showTopBarTitle}
-        returnButton={this.state.showBackButton ? <ArrowBackIosIcon onClick={this.renderFeedPage} fontSize='small' /> : ''}
+          title={this.state.showTopBarTitle}
+          returnButton={this.state.showBackButton ? <ArrowBackIosIcon onClick={this.renderFeedPage} fontSize='small' /> : ''}
       />
-    )
+  )
     const textField = (
       <TextField
         variant="outlined"
@@ -144,7 +145,8 @@ function mapDispatchToProps(dispatch) {
   return {
     getPosts: () => dispatch(getRestaurantsList()),
     setCurrentPage: (currentPage) => dispatch(setCurrentPage(currentPage)),
-    setShowMenu: (show) => dispatch(setShowMenu(show))
+    setShowMenu: (show) => dispatch(setShowMenu(show)),
+    getOrderProgress: (token) => dispatch(getOrderProgress(token))
   };
 }
 function mapStateToProps(state) {
